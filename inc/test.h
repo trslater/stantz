@@ -4,6 +4,11 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "cameras.h"
+#include "geometry.h"
+#include "linalg.h"
+#include "materials.h"
+#include "objects.h"
 #include "rendering.h"
 
 #endif

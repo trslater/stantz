@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS=-Iinc -Wall -F /Library/Frameworks
 LDFLAGS=-Iinc -framework SDL2 -F /Library/Frameworks -I /Library/Frameworks/SDL2.framework/Headers
 
-bin/test: obj/test.o obj/rendering.o
+bin/test: obj/test.o obj/geometry.o obj/linalg.o obj/objects.o obj/rendering.o
 	mkdir -p bin
 	$(CC) -o $@ $^ $(LDFLAGS)
 
