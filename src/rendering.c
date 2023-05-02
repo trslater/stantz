@@ -11,7 +11,7 @@ void render( ObjectList *objects, LightList *lights, Camera *camera, int num_bou
     }
     
     SDL_Window* window = SDL_CreateWindow(
-        "Ray Tracer",
+        "Stantz",
         SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
         width, height,
         SDL_WINDOW_SHOWN
