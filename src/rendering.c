@@ -198,6 +198,18 @@ void cast_ray( Vector3D pixel, Ray *ray, ObjectList *objects, LightList *lights,
     pixel[0] *= material->color[0];
     pixel[1] *= material->color[1];
     pixel[2] *= material->color[2];
+
+    Ray reflected_ray;
+    reflect_3d( reflected_ray.direction, normal, intersection, ray->direction );
+    copy_3d( reflected_ray.origin, intersection );
+    
+    // copy_3d( reflected_ray.origin, reflected_ray.direction );
+    // scale_3d( reflected_ray.origin, 0.00001 );
+    // add_3d( reflected_ray.origin, reflected_ray.origin, intersection );
+
+    if( bounces_left <= 0 ) return;
+
+    cast_ray( pixel, &reflected_ray, objects, lights, bounces_left - 1 );
 }
 
 void ray_point( Vector3D intersection, Ray *ray, double t )

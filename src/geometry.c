@@ -16,7 +16,7 @@ double ray_plane_intersection( Ray *ray, PlaneGeometry *plane )
 {
     double perpendicularness = dot_3d( plane->normal, ray->direction );
         
-    if ( perpendicularness == 0 ) return -1;
+    if ( perpendicularness >= 0 ) return -1;
     
     return ( plane->offset - dot_3d( plane->normal, ray->origin ) )/perpendicularness;
 }

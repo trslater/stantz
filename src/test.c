@@ -108,7 +108,7 @@ int main( int argc, char const *argv[] )
         .focal_length = 15,
     };
 
-    render( &objects, &lights, &camera, 0, atoi( argv[1] ), atoi( argv[2] ) );
+    render( &objects, &lights, &camera, 1, atoi( argv[1] ), atoi( argv[2] ) );
 
     destroy_object_list( &objects );
     destroy_light_list( &lights );
