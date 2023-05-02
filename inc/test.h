@@ -6,6 +6,7 @@
 
 #include "cameras.h"
 #include "geometry.h"
+#include "lights.h"
 #include "linalg.h"
 #include "materials.h"
 #include "objects.h"

@@ -1,7 +1,7 @@
 #include "rendering.h"
 
 // SDL rendering based on https://lazyfoo.net/tutorials/SDL/02_getting_an_image_on_the_screen/index.php
-void render( ObjectList *objects, Camera *camera, int num_bounces, int width, int height )
+void render( ObjectList *objects, LightList *lights, Camera *camera, int num_bounces, int width, int height )
 {
     // printf
     if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
@@ -58,7 +58,7 @@ void render( ObjectList *objects, Camera *camera, int num_bounces, int width, in
             copy_3d( ray.direction, pixel_center );
             sub_3d( ray.direction, ray.direction, camera->origin );
 
-            cast_ray( pixels[i*width + j], objects, &ray, num_bounces );
+            cast_ray( pixels[i*width + j], &ray, objects, lights, num_bounces );
         }
     }
 
@@ -107,7 +107,7 @@ void render( ObjectList *objects, Camera *camera, int num_bounces, int width, in
     SDL_Quit();
 }
 
-void cast_ray( Vector3D pixel, ObjectList *objects, Ray *ray, int bounces_left )
+void cast_ray( Vector3D pixel, Ray *ray, ObjectList *objects, LightList *lights, int bounces_left )
 {
     double t, min_t = DBL_MAX;
     Vector3D normal, intersection;
@@ -160,9 +160,44 @@ void cast_ray( Vector3D pixel, ObjectList *objects, Ray *ray, int bounces_left )
 
     if( !found ) return;
 
-    pixel[0] = material->color[0];
-    pixel[1] = material->color[1];
-    pixel[2] = material->color[2];
+    // Light loop
+    for( int l = 0; l < lights->count; ++l )
+    {
+        Vector3D light_dir;
+        sub_3d( light_dir, lights->items[l]->position, intersection );
+        normalize_3d( light_dir );
+
+        double diffusion = dot_3d( light_dir, normal );
+        
+        diffusion = fmax( 0, diffusion );
+
+        Vector3D camera_dir;
+        copy_3d( camera_dir, ray->direction );
+        normalize_3d( camera_dir );
+        neg_3d( camera_dir );
+
+        Vector3D light_camera_midpoint;
+        add_3d( light_camera_midpoint, camera_dir, light_dir );
+        normalize_3d( light_camera_midpoint );
+        
+        double specularity = dot_3d( light_camera_midpoint, normal );
+        specularity = fmax( 0, specularity );
+
+        pixel[0] += 
+            material->diffusion*lights->items[l]->color[0]*diffusion +
+            material->specularity*lights->items[l]->color[0]*pow( specularity, material->shininess );
+        pixel[1] +=
+            material->diffusion*lights->items[l]->color[1]*diffusion +
+            material->specularity*lights->items[l]->color[1]*pow( specularity, material->shininess );
+        pixel[2] +=
+            material->diffusion*lights->items[l]->color[2]*diffusion +
+            material->specularity*lights->items[l]->color[2]*pow( specularity, material->shininess );
+    }
+
+    // Apply material colour
+    pixel[0] *= material->color[0];
+    pixel[1] *= material->color[1];
+    pixel[2] *= material->color[2];
 }
 
 void ray_point( Vector3D intersection, Ray *ray, double t )
