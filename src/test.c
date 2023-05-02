@@ -14,6 +14,7 @@ int main( int argc, char const *argv[] )
         .diffusion = 0.3,
         .specularity = 1,
         .shininess = 50,
+        .reflectance = 0.75,
         .color = { 1, 1, 1 },
     };
     if( !object_list_append( &objects, SPHERE, &sphere_geometry, &sphere_material ) )
@@ -28,6 +29,7 @@ int main( int argc, char const *argv[] )
         .diffusion = 1,
         .specularity = 0,
         .shininess = 0,
+        .reflectance = 0.25,
         .color = { .9, .8, .7 },
     };
     if( !object_list_append( &objects, PLANE, &floor_geometry, &floor_material ) )
@@ -42,6 +44,7 @@ int main( int argc, char const *argv[] )
         .diffusion = 1,
         .specularity = 0,
         .shininess = 0,
+        .reflectance = 0.5,
         .color = { 1, 0, 0 },
     };
     if( !object_list_append( &objects, PLANE, &red_wall_geometry, &red_wall_material ) )
@@ -56,6 +59,7 @@ int main( int argc, char const *argv[] )
         .diffusion = 1,
         .specularity = 0,
         .shininess = 0,
+        .reflectance = 0.5,
         .color = { 0, 1, 0 },
     };
     if( !object_list_append( &objects, PLANE, &green_wall_geometry, &green_wall_material ) )
@@ -87,6 +91,7 @@ int main( int argc, char const *argv[] )
         .diffusion = 0,
         .specularity = 1,
         .shininess = 0,
+        .reflectance = 0,
         .color = { 1, 1, 1 },
     };
     if( !object_list_append( &objects, PARALLELOGRAM, &light_geometry, &light_material ) )
@@ -108,7 +113,7 @@ int main( int argc, char const *argv[] )
         .focal_length = 15,
     };
 
-    render( &objects, &lights, &camera, 1, atoi( argv[1] ), atoi( argv[2] ) );
+    render( &objects, &lights, &camera, 10, atoi( argv[1] ), atoi( argv[2] ) );
 
     destroy_object_list( &objects );
     destroy_light_list( &lights );

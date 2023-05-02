@@ -9,6 +9,7 @@ typedef struct {
     double diffusion;
     double specularity;
     double shininess;
+    double reflectance;
     ColorRGB color;
 } Material;
 
