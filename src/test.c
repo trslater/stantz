@@ -2,7 +2,7 @@
 
 int main( int argc, char const *argv[] )
 {
-    printf( "Hello, world!\n" );
-    
+    render( atoi( argv[1] ), atoi( argv[2] ) );
+
     return 0;
 }
