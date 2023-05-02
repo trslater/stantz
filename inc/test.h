@@ -4,6 +4,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "stantz.h"
+#include "rendering.h"
 
 #endif
