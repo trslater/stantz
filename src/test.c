@@ -3,21 +3,36 @@
 int main( int argc, char const *argv[] )
 {
     ObjectList objects;
-    init_object_list( &objects, 7 );
+    init_object_list( &objects, 9 );
 
-        // Sphere
-    SphereGeometry sphere_geometry = {
+    // Sphere 1
+    SphereGeometry sphere_1_geometry = {
         .center = { -0.5, -0.5, 6 },
         .radius = 0.5,
     };
-    Material sphere_material = {
+    Material sphere_1_material = {
         .diffusion = 0.3,
         .specularity = 1,
         .shininess = 50,
         .reflectance = 0.75,
         .color = { 1, 1, 1 },
     };
-    if( !object_list_append( &objects, SPHERE, &sphere_geometry, &sphere_material ) )
+    if( !object_list_append( &objects, SPHERE, &sphere_1_geometry, &sphere_1_material ) )
+        printf( "List full\n" );
+    
+    // Sphere 2
+    SphereGeometry sphere_2_geometry = {
+        .center = { 0.5, -0.75, 6 },
+        .radius = 0.25,
+    };
+    Material sphere_2_material = {
+        .diffusion = 0.75,
+        .specularity = 0.25,
+        .shininess = 10,
+        .reflectance = 0.2,
+        .color = { 1, 0, 0 },
+    };
+    if( !object_list_append( &objects, SPHERE, &sphere_2_geometry, &sphere_2_material ) )
         printf( "List full\n" );
 
     // Floor
@@ -71,6 +86,14 @@ int main( int argc, char const *argv[] )
         .offset = 5,
     };
     if( !object_list_append( &objects, PLANE, &back_wall_geometry, &floor_material ) )
+        printf( "List full\n" );
+    
+    // Front wall
+    PlaneGeometry front_wall_geometry = {
+        .normal = { 0, 0, -1 },
+        .offset = 11,
+    };
+    if( !object_list_append( &objects, PLANE, &front_wall_geometry, &floor_material ) )
         printf( "List full\n" );
     
     // Ceiling
