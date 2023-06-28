@@ -2,7 +2,7 @@
 
 void init_light_list( LightList *lights, int capacity )
 {
-    lights->items = malloc( capacity*sizeof( Light * ) );
+    lights->items = ( Light ** )malloc( capacity*sizeof( Light * ) );
     lights->capacity = capacity;
     lights->count = 0;
 }

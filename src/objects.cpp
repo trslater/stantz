@@ -2,7 +2,7 @@
 
 void init_object_list( ObjectList *objects, int capacity )
 {
-    objects->items = malloc( capacity*sizeof( Object ) );
+    objects->items = ( Object * )malloc( capacity*sizeof( Object ) );
     objects->capacity = capacity;
     objects->count = 0;
 }
