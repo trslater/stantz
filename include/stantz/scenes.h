@@ -1,6 +1,8 @@
 #ifndef SCENES_H
 #define SCENES_H
 
+#include <Eigen/Dense>
+
 #include "objects.h"
 #include "lights.h"
 #include "linalg.h"

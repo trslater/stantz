@@ -1,6 +1,8 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include <Eigen/Dense>
+
 #include "linalg.h"
 
 typedef struct {

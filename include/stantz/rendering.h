@@ -1,6 +1,7 @@
 #ifndef STANTZ_H
 #define STANTZ_H
 
+#include <Eigen/Dense>
 #include <SDL2/SDL.h>
 
 #include "cameras.h"

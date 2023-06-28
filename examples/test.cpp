@@ -4,7 +4,6 @@
 #include "stantz/cameras.h"
 #include "stantz/geometry.h"
 #include "stantz/lights.h"
-#include "linalg.h"
 #include "stantz/materials.h"
 #include "stantz/objects.h"
 #include "stantz/rendering.h"

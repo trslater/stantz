@@ -4,6 +4,8 @@
 #include <math.h>
 #include <stdlib.h>
 
+#include <Eigen/Dense>
+
 #include "linalg.h"
 #include "materials.h"
 

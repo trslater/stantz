@@ -6,6 +6,7 @@ Named after the "heart of the Ghostbusters," Ray Stantz, **Stantz** is a path tr
 
 ## Requirements
 
+- Eigen3
 - SDL2
 
 ## Installation

@@ -1,6 +1,8 @@
 #ifndef GEOMETRY_H
 #define GEOMETRY_H
 
+#include <Eigen/Dense>
+
 #include "linalg.h"
 
 typedef struct {
