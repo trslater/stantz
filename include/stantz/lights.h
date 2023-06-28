@@ -1,24 +1,21 @@
-#ifndef LIGHTS_H
-#define LIGHTS_H
+#pragma once
 
 #include <stdlib.h>
 
 #include "linalg.h"
 #include "materials.h"
 
-typedef struct {
+struct Light {
     Vector3D position;
     ColorRGB color;
-} Light;
+};
 
-typedef struct {
+struct LightList {
     Light **items;
     int capacity;
     int count;
-} LightList;
+};
 
 void init_light_list( LightList *, int );
 int light_list_append( LightList *, Light * );
 void destroy_light_list( LightList * );
-
-#endif

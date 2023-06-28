@@ -1,16 +1,13 @@
-#ifndef MATERIALS_H
-#define MATERIALS_H
+#pragma once
 
 #include "linalg.h"
 
 typedef double ColorRGB[3];
 
-typedef struct {
+struct Material {
     double diffusion;
     double specularity;
     double shininess;
     double reflectance;
     ColorRGB color;
-} Material;
-
-#endif
+};
