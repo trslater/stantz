@@ -11,6 +11,12 @@
 
 int main( int argc, char const *argv[] )
 {
+    if( argc < 3 )
+    {
+        printf( "Usage: test WIDTH HEIGHT\n" );
+        return 1;
+    }
+
     ObjectList objects;
     init_object_list( &objects, 9 );
 
