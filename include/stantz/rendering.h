@@ -1,5 +1,4 @@
-#ifndef STANTZ_H
-#define STANTZ_H
+#pragma once
 
 #include <Eigen/Dense>
 #include <SDL2/SDL.h>
@@ -16,5 +15,3 @@ void cast_ray( Vector3D, Ray *, ObjectList *, LightList *, int );
 void ray_point( Vector3D, Ray *, double );
 void set_pixel( SDL_Surface *, int, int, ColorRGB );
 Uint32 rgb_to_int( SDL_PixelFormat *, ColorRGB );
-
-#endif
