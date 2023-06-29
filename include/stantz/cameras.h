@@ -2,10 +2,8 @@
 
 #include <Eigen/Dense>
 
-#include "linalg.h"
-
 struct Camera {
-    Vector3D origin;
+    Eigen::Vector3d origin;
     double fov;
     double focal_length;
 };
