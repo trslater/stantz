@@ -1,26 +1,19 @@
 #include "objects.h"
 
-void init_object_list( ObjectList *objects, int capacity )
+template <>
+Eigen::Vector3d Mesh<Plane>::normal( const Eigen::Vector3d& point )
 {
-    objects->items = ( Object * )malloc( capacity*sizeof( Object ) );
-    objects->capacity = capacity;
-    objects->count = 0;
+    return geometry.normal;
 }
 
-int object_list_append( ObjectList *objects, ObjectType type, void *geometry, Material *material )
+template <>
+Eigen::Vector3d Mesh<Sphere>::normal( const Eigen::Vector3d& point )
 {
-    if( objects->count >= objects->capacity ) return 0;
-
-    objects->items[objects->count].type = type;
-    objects->items[objects->count].geometry = geometry;
-    objects->items[objects->count].material = material;
-
-    ++(objects->count);
-
-    return 1;
+    return ( point - geometry.center ).normalized();
 }
 
-void destroy_object_list( ObjectList *objects )
+template <>
+Eigen::Vector3d Mesh<Parallelogram>::normal( const Eigen::Vector3d& point )
 {
-    free( objects->items );
+    return ( geometry.u.cross(geometry.v) ).normalized();
 }
