@@ -2,32 +2,21 @@
 
 #include <Eigen/Dense>
 
-#include "linalg.h"
-
-struct Ray {
-    Vector3D origin;
-    Vector3D direction;
-};
-
-struct PlaneGeometry {
-    Vector3D normal;
+struct Plane
+{
+    Eigen::Vector3d normal;
     double offset;
 };
 
-struct SphereGeometry {
-    Vector3D center;
+struct Sphere
+{
+    Eigen::Vector3d center;
     double radius;
 };
 
-struct ParallelogramGeometry {
-    Vector3D origin;
-    Vector3D u;
-    Vector3D v;
+struct Parallelogram
+{
+    Eigen::Vector3d origin;
+    Eigen::Vector3d u;
+    Eigen::Vector3d v;
 };
-
-void sphere_normal( Vector3D, SphereGeometry *, Vector3D );
-void parallelogram_normal( Vector3D, ParallelogramGeometry *, Vector3D );
-
-double ray_plane_intersection( Ray *, PlaneGeometry * );
-double ray_sphere_intersection( Ray *, SphereGeometry * );
-double ray_parallelogram_intersection( Ray *, ParallelogramGeometry * );
