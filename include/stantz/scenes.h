@@ -1,15 +1,16 @@
 #pragma once
 
+#include <variant>
+#include <vector>
+
 #include <Eigen/Dense>
 
 #include "objects.h"
 #include "lights.h"
-#include "linalg.h"
 
 struct Scene {
-    Object *objects;
-    int num_objects;
-    Light *lights;
-    Vector3D ambient_light;
-    int num_lights;
+    // TODO: Find better way to do this
+    std::vector<std::variant<Mesh<Plane>, Mesh<Sphere>, Mesh<Parallelogram>>> objects;
+    std::vector<Light> lights;
+    Eigen::Vector3d ambient_light;
 };
