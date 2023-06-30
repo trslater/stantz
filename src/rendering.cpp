@@ -126,6 +126,15 @@ Eigen::Vector3d cast_ray( const Ray& ray, const Scene& scene, int bounces_left )
     // Apply material colour
     pixel = pixel.cwiseProduct( mesh->material.color );
 
+    Ray reflected_ray{
+        intersection,
+        ray.direction - 2*ray.direction.dot( normal )*normal,
+    };
+
+    if( bounces_left <= 0 || mesh->material.reflectance == 0 ) return pixel;
+
+    pixel += mesh->material.reflectance*cast_ray( reflected_ray, scene, bounces_left - 1 );
+
     return pixel;
 }
 
