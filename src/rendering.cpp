@@ -1,67 +1,5 @@
 #include "rendering.h"
 
-template <>
-double Ray::intersection<Plane>( const Plane& plane )
-{
-    double perpendicularness = plane.normal.dot( direction );
-        
-    if ( perpendicularness >= 0 ) return -1;
-    
-    return ( plane.offset - plane.normal.dot( origin ) )/perpendicularness;
-}
-
-template <>
-double Ray::intersection<Sphere>( const Sphere& sphere )
-{
-    // Quadratic coefficients
-    double a = direction.dot( direction );
-
-    // Ray has ill-defined direction
-    if ( a == 0 ) return -1;
-
-    Eigen::Vector3d ray_center_diff = origin - sphere.center;
-    double b = 2*ray_center_diff.dot( direction );
-    double c = ray_center_diff.dot( ray_center_diff ) - sphere.radius*sphere.radius;
-
-    double discriminant = b*b - 4*a*c;
-
-    // Misses
-    if ( discriminant < 0 ) return -1;
-    
-    double first_term = -b/2/a;
-    
-    // Just grazes surface
-    if ( discriminant == 0 ) return first_term;
-    
-    double second_term = sqrt(discriminant)/2/a;
-
-    // Enter and exit wounds
-    double t1 = first_term + second_term;
-    double t2 = first_term - second_term;
-
-    return t1 < t2 ? t1 : t2;
-}
-
-template <>
-double Ray::intersection<Parallelogram>( const Parallelogram& parallelogram )
-{
-    Eigen::Matrix3d A {};
-    A << parallelogram.u, parallelogram.v, direction;
-
-    printf( "%f %f %f\n", A( 0, 0 ), A( 0, 1 ), A( 0, 2 ) );
-    printf( "%f %f %f\n", A( 1, 0 ), A( 1, 1 ), A( 1, 2 ) );
-    printf( "%f %f %f\n", A( 2, 0 ), A( 2, 1 ), A( 2, 2 ) );
-
-    Eigen::Vector3d uvt = A.inverse()*( origin - parallelogram.origin );
-
-    uvt[2] *= -1;
-
-    // Is it outside of parallelogram bounds?
-    if( uvt[0] < 0 || uvt[0] > 1 || uvt[1] < 0 || uvt[1] > 1 ) return -1;
-    
-    return uvt[2];
-}
-
 // SDL rendering based on https://lazyfoo.net/tutorials/SDL/02_getting_an_image_on_the_screen/index.php
 void render( const Scene& scene, const Camera& camera, int num_bounces, const int width, const int height )
 {
@@ -141,7 +79,54 @@ void render( const Scene& scene, const Camera& camera, int num_bounces, const in
 
 Eigen::Vector3d cast_ray( const Ray& ray, const Scene& scene, int bounces_left )
 {
-    return Eigen::Vector3d{ 5, 0, 0, };
+    double t_min = std::numeric_limits<double>::max();
+    const Mesh* mesh;
+    bool found = false;
+    
+    // Object loop
+    for( int o = 0; o < scene.objects.size(); ++o )
+    {
+        double t = scene.objects[o].geometry->intersection( ray );
+
+        if( t >= 0 && t < t_min )
+        {
+            t_min = t;
+            mesh = &scene.objects[o];
+            found = true;
+        }
+    }
+
+    if( !found ) return Eigen::Vector3d{};
+
+    Eigen::Vector3d intersection = ray.at( t_min );
+    Eigen::Vector3d normal = mesh->geometry->normal( intersection );
+
+    Eigen::Vector3d pixel;
+
+    // Light loop
+    for( int l = 0; l < scene.lights.size(); ++l )
+    {
+        Eigen::Vector3d light_dir = ( scene.lights[l].position - intersection ).normalized();
+
+        double diffusion = light_dir.dot( normal );
+        
+        diffusion = std::max( 0., diffusion );
+
+        Eigen::Vector3d camera_dir = -ray.direction.normalized();
+
+        double specularity = ( camera_dir + light_dir ).normalized().dot( normal );
+        specularity = std::max( 0., specularity );
+
+        // TODO: Clean this up
+        pixel =
+            mesh->material.diffusion*scene.lights[l].color*diffusion +
+            mesh->material.specularity*scene.lights[l].color*std::pow( specularity, mesh->material.shininess );
+    }
+
+    // Apply material colour
+    pixel = pixel.cwiseProduct( mesh->material.color );
+
+    return pixel;
 }
 
 void set_pixel( SDL_Surface *surface, int i, int j, const Eigen::Vector3d& colour )

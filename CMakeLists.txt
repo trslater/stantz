@@ -24,7 +24,7 @@ include_directories(${SDL2_INCLUDE_DIRS})
 # Stantz lib
 add_library(
     stantz STATIC
-    src/objects.cpp
+    src/geometry.cpp
     src/rendering.cpp)
 target_include_directories(
     stantz PRIVATE

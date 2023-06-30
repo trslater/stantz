@@ -2,21 +2,51 @@
 
 #include <Eigen/Dense>
 
-struct Plane
+struct Ray
 {
-    Eigen::Vector3d normal;
-    double offset;
+    Eigen::Vector3d origin;
+    Eigen::Vector3d direction;
+
+    Eigen::Vector3d at( double t ) const;
 };
 
-struct Sphere
+class Geometry
+{
+public:
+    virtual Eigen::Vector3d normal( const Eigen::Vector3d& point ) = 0;
+    virtual double intersection( const Ray& ray ) = 0;
+};
+
+class Plane : public Geometry
+{
+    Eigen::Vector3d _normal;
+    double offset;
+
+public:
+    Plane( Eigen::Vector3d normal, double offset );
+    Eigen::Vector3d normal( const Eigen::Vector3d& point );
+    double intersection( const Ray& ray );
+};
+
+class Sphere : public Geometry
 {
     Eigen::Vector3d center;
     double radius;
+
+public:
+    Sphere( Eigen::Vector3d center, double radius );
+    Eigen::Vector3d normal( const Eigen::Vector3d& point );
+    double intersection( const Ray& ray );
 };
 
-struct Parallelogram
+class Parallelogram : public Geometry
 {
     Eigen::Vector3d origin;
     Eigen::Vector3d u;
     Eigen::Vector3d v;
+
+public:
+    Parallelogram( Eigen::Vector3d origin, Eigen::Vector3d u, Eigen::Vector3d v );
+    Eigen::Vector3d normal( const Eigen::Vector3d& point );
+    double intersection( const Ray& ray );
 };
