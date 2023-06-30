@@ -21,18 +21,9 @@ include_directories(${SDL2_INCLUDE_DIRS})
 # Internal libs
 # =============================================================================
 
-# LinAlg lib
-# TODO: Replace with Eigen
-add_library(linalg src/linalg.cpp)
-target_include_directories(
-    linalg PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/include)
-
 # Stantz lib
 add_library(
     stantz STATIC
-    src/geometry.cpp
-    src/lights.cpp
     src/objects.cpp
     src/rendering.cpp)
 target_include_directories(
@@ -44,8 +35,7 @@ target_include_directories(
 target_link_libraries(
     stantz PRIVATE
     Eigen3::Eigen
-    ${SDL2_LIBRARIES}
-    linalg)
+    ${SDL2_LIBRARIES})
 
 
 # Executables
