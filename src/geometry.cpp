@@ -54,28 +54,22 @@ double Sphere::intersection( const Ray& ray )
     // Ray has ill-defined direction
     if ( a == 0 ) return -1;
 
-    Eigen::Vector3d ray_center_diff = ray.origin() - center;
-    double b = 2*ray_center_diff.dot( ray.direction() );
-    double c = ray_center_diff.dot( ray_center_diff ) - radius*radius;
+    Eigen::Vector3d u = ray.origin() - center;
+    double b = ray.direction().dot( u );
+    double c = u.dot( u ) - radius*radius;
 
-    double discriminant = b*b - 4*a*c;
+    double discriminant = b*b - c;
 
     // Misses
     if ( discriminant < 0 ) return -1;
     
-    double first_term = -b/2/a;
+    // Just grazes surface (i.e., tangent to surface)
+    if ( discriminant == 0 ) return -b;
     
-    // Just grazes surface
-    if ( discriminant == 0 ) return first_term;
-    
-    double second_term = sqrt(discriminant)/2/a;
+    double second_term = sqrt(discriminant);
 
-    // Enter and exit wounds
-    double t1 = first_term + second_term;
-    double t2 = first_term - second_term;
-
-    // Don't know which one is which, so we return closest
-    return t1 < t2 ? t1 : t2;
+    // Since second_term is always positive, (-) root is always smaller
+    return -b - second_term;
 }
 
 Parallelogram::Parallelogram( Eigen::Vector3d origin, Eigen::Vector3d u, Eigen::Vector3d v )
