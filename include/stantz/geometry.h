@@ -2,12 +2,16 @@
 
 #include <Eigen/Dense>
 
-struct Ray
+class Ray
 {
-    Eigen::Vector3d origin;
-    Eigen::Vector3d direction;
+    Eigen::Vector3d _origin;
+    Eigen::Vector3d _direction;
 
+public:
+    Ray( Eigen::Vector3d origin, Eigen::Vector3d direction );
     Eigen::Vector3d at( double t ) const;
+    const Eigen::Vector3d& origin() const;
+    const Eigen::Vector3d& direction() const;
 };
 
 class Geometry

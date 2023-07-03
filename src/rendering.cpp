@@ -42,10 +42,10 @@ void render( const Scene& scene, const Camera& camera, int num_bounces, const in
                 camera.origin[2] - camera.focal_length
             };
 
-            Ray ray{
+            Ray ray(
                 camera.origin,
-                pixel_center - camera.origin,
-            };
+                pixel_center - camera.origin
+            );
 
             pixels[i][j] = cast_ray( ray, scene, num_bounces );
         }
@@ -112,7 +112,7 @@ Eigen::Vector3d cast_ray( const Ray& ray, const Scene& scene, int bounces_left )
         
         diffusion = std::max( 0., diffusion );
 
-        Eigen::Vector3d camera_dir = -ray.direction.normalized();
+        Eigen::Vector3d camera_dir = -ray.direction().normalized();
 
         double specularity = ( camera_dir + light_dir ).normalized().dot( normal );
         specularity = std::max( 0., specularity );
@@ -128,7 +128,7 @@ Eigen::Vector3d cast_ray( const Ray& ray, const Scene& scene, int bounces_left )
 
     Ray reflected_ray{
         intersection,
-        ray.direction - 2*ray.direction.dot( normal )*normal,
+        ray.direction() - 2*ray.direction().dot( normal )*normal,
     };
 
     if( bounces_left <= 0 || mesh->material.reflectance == 0 ) return pixel;
