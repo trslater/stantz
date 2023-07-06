@@ -26,3 +26,14 @@ $ ./bin/test <width> <height>
 ```
 
 `width` and `height` are the output image size in pixels.
+
+## Roadmap
+
+- [ ] C++ Performance
+  - Switching to C++ greatly degraded performance
+- [ ] Modernize C++
+- [ ] Path tracing
+- [ ] General performance
+  - More efficient
+  - Multithreading? Multiprocessing?
+- [ ] Triangle meshes
