@@ -1,3 +1,5 @@
+use stantz::run;
+
 fn main() {
-    println!("Hello, world!");
+    run();
 }
