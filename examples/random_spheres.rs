@@ -36,38 +36,46 @@ fn main() {
         .expect("Image height must be an integer");
     let filename = &args[3];
 
-    let objects = (0..10)
-        .map(|_| {
-            let mut rng = rand::thread_rng();
+    let mut rng = rand::thread_rng();
 
-            Object {
-                geometry: Geometry::Sphere {
-                    center: Vector3::new(
-                        lerp(-3.0, 3.0, rng.gen()),
-                        lerp(-3.0, 3.0, rng.gen()),
-                        lerp(0.0, 4.0, rng.gen()),
-                    ),
-                    radius: lerp(0.25, 1.0, rng.gen()),
-                },
-                material: Material {
-                    diffusion: lerp(0.0, 1.0, rng.gen()),
-                    specularity: lerp(0.0, 1.0, rng.gen()),
-                    shininess: lerp(0.0, 100.0, rng.gen()),
-                    reflectance: lerp(0.0, 1.0, rng.gen()),
-                    color: Color::new(
-                        lerp(0.0, 1.0, rng.gen()),
-                        lerp(0.0, 1.0, rng.gen()),
-                        lerp(0.0, 1.0, rng.gen()),
-                    ),
-                },
-            }
+    let objects = (0..10)
+        .map(|_| Object {
+            geometry: Geometry::Sphere {
+                center: Vector3::new(
+                    lerp(-3.0, 3.0, rng.gen()),
+                    lerp(-3.0, 3.0, rng.gen()),
+                    lerp(0.0, 4.0, rng.gen()),
+                ),
+                radius: lerp(0.25, 1.0, rng.gen()),
+            },
+            material: Material {
+                diffusion: lerp(0.0, 1.0, rng.gen()),
+                specularity: lerp(0.0, 1.0, rng.gen()),
+                shininess: lerp(0.0, 100.0, rng.gen()) as i32,
+                reflectance: lerp(0.0, 1.0, rng.gen()),
+                color: Color::new(
+                    lerp(0.0, 1.0, rng.gen()),
+                    lerp(0.0, 1.0, rng.gen()),
+                    lerp(0.0, 1.0, rng.gen()),
+                ),
+            },
         })
         .collect();
 
-    let lights = vec![Light {
-        position: Vector3::new(0.0, 1.17, 5.8),
-        color: Color::new(1.0, 1.0, 1.0),
-    }];
+    let lights = (0..4)
+        .map(|_| Light {
+            position: Vector3::new(
+                lerp(-4.0, 4.0, rng.gen()),
+                lerp(-4.0, 4.0, rng.gen()),
+                lerp(-4.0, 8.0, rng.gen()),
+            ),
+            color: Color::new(
+                lerp(0.0, 1.0, rng.gen()),
+                lerp(0.0, 1.0, rng.gen()),
+                lerp(0.0, 1.0, rng.gen()),
+            ),
+        })
+        .collect();
 
     let camera = Camera {
         origin: Vector3::new(0.0, 0.0, 10.0),

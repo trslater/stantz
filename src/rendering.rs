@@ -71,7 +71,7 @@ fn cast_ray(
                     light.color
                         * material.color
                         * (surface_diffusion * material.diffusion
-                            + surface_specularity.powf(material.shininess) * material.specularity)
+                            + surface_specularity.powi(material.shininess) * material.specularity)
                 })
                 .sum()
         })

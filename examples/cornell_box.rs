@@ -45,7 +45,7 @@ fn main() {
             material: Material {
                 diffusion: 0.3,
                 specularity: 1.0,
-                shininess: 50.0,
+                shininess: 50,
                 reflectance: 0.75,
                 color: Color::new(1.0, 1.0, 1.0),
             },
@@ -59,7 +59,7 @@ fn main() {
             material: Material {
                 diffusion: 0.75,
                 specularity: 0.25,
-                shininess: 10.0,
+                shininess: 10,
                 reflectance: 0.2,
                 color: Color::new(1.0, 0.0, 0.0),
             },
@@ -70,7 +70,7 @@ fn main() {
             material: Material {
                 diffusion: 1.0,
                 specularity: 0.0,
-                shininess: 0.0,
+                shininess: 0,
                 reflectance: 0.25,
                 color: Color::new(0.9, 0.8, 0.7),
             },
@@ -81,7 +81,7 @@ fn main() {
             material: Material {
                 diffusion: 1.0,
                 specularity: 0.0,
-                shininess: 0.0,
+                shininess: 0,
                 reflectance: 0.5,
                 color: Color::new(1.0, 0.0, 0.0),
             },
@@ -92,7 +92,7 @@ fn main() {
             material: Material {
                 diffusion: 1.0,
                 specularity: 0.0,
-                shininess: 0.0,
+                shininess: 0,
                 reflectance: 0.5,
                 color: Color::new(0.0, 1.0, 0.0),
             },
@@ -103,7 +103,7 @@ fn main() {
             material: Material {
                 diffusion: 1.0,
                 specularity: 0.0,
-                shininess: 0.0,
+                shininess: 0,
                 reflectance: 0.25,
                 color: Color::new(0.9, 0.8, 0.7),
             },
@@ -114,7 +114,7 @@ fn main() {
             material: Material {
                 diffusion: 1.0,
                 specularity: 0.0,
-                shininess: 0.0,
+                shininess: 0,
                 reflectance: 0.25,
                 color: Color::new(0.9, 0.8, 0.7),
             },
@@ -125,7 +125,7 @@ fn main() {
             material: Material {
                 diffusion: 1.0,
                 specularity: 0.0,
-                shininess: 0.0,
+                shininess: 0,
                 reflectance: 0.25,
                 color: Color::new(0.9, 0.8, 0.7),
             },
@@ -140,7 +140,7 @@ fn main() {
             material: Material {
                 diffusion: 0.0,
                 specularity: 1.0,
-                shininess: 0.0,
+                shininess: 0,
                 reflectance: 0.0,
                 color: Color::new(1.0, 1.0, 1.0),
             },
