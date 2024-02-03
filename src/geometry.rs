@@ -29,54 +29,27 @@ pub mod ray {
 }
 
 pub enum Geometry {
-    Plane {
-        normal: Vector3<f32>,
-        offset: f32,
-    },
     Sphere {
         center: Vector3<f32>,
         radius: f32,
     },
-    Parallelogram {
-        origin: Vector3<f32>,
+    Triangle {
         a: Vector3<f32>,
         b: Vector3<f32>,
+        c: Vector3<f32>,
     },
 }
 
 impl Geometry {
-    pub fn new_plane(normal: Vector3<f32>, offset: f32) -> Self {
-        Self::Plane {
-            normal: normal.normalize(),
-            offset: offset,
-        }
-    }
-
     pub fn normal_at(&self, point: &Vector3<f32>) -> Vector3<f32> {
         match self {
-            Geometry::Plane { normal, .. } => *normal,
             Geometry::Sphere { center, .. } => (point - center).normalize(),
-            Geometry::Parallelogram { origin: _, a, b } => a.cross(b).normalize(),
+            Geometry::Triangle { a, b, c } => (b - a).cross(&(c - a)).normalize(),
         }
     }
 
     pub fn intersection(&self, ray: &Ray) -> Option<f32> {
         match self {
-            Geometry::Plane { normal, offset } => {
-                let parallelism: f32 = normal.dot(&ray.direction());
-
-                // When ray is shining on plane orthogonally, the ray and surface normal
-                // are pointing in opposite directions, so are antiparallel, i.e.,
-                // parallelism is negative. If parallelism is zero, ray is parallel to
-                // plane surface. If parallelism is strictly positive, ray is pointing
-                // away from plane.
-                if parallelism >= 0.0 {
-                    return None;
-                }
-
-                Some((offset - normal.dot(&ray.origin)) / parallelism)
-            }
-
             Geometry::Sphere { center, radius } => {
                 // a, b, and c are standard quadratic equation coefficients
 
@@ -108,12 +81,16 @@ impl Geometry {
                 Some(-b - discriminant.sqrt())
             }
 
-            Geometry::Parallelogram { origin, a, b } => {
-                Matrix3::from_columns(&[*a, *b, -ray.direction()])
+            Geometry::Triangle { a, b, c } => {
+                Matrix3::from_columns(&[b - a, c - a, -ray.direction()])
                     .lu()
-                    .solve(&(ray.origin - origin))
+                    .solve(&(ray.origin - a))
                     .map(|uvt| [uvt[0], uvt[1], uvt[2]])
-                    .filter(|[u, v, ..]| u >= &0.0 && u <= &1.0 && v >= &0.0 && v <= &1.0)
+                    .filter(|[u, v, ..]| {
+                        let w: f32 = 1.0 - u - v;
+
+                        u >= &0.0 && u <= &1.0 && v >= &0.0 && v <= &1.0 && w >= 0.0 && w <= 1.0
+                    })
                     .map(|[.., t]| t)
             }
         }

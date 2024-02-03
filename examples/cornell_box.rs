@@ -35,6 +35,13 @@ fn main() {
         .expect("Image height must be an integer");
     let filename = &args[3];
 
+    let green_wall_x: f32 = 1.5;
+    let red_wall_x: f32 = -1.5;
+    let ceiling_y: f32 = 1.2;
+    let floor_y: f32 = -1.0;
+    let back_wall_z: f32 = 5.0;
+    let front_wall_z: f32 = 11.0;
+
     let objects = vec![
         // Sphere 1
         Object {
@@ -66,7 +73,25 @@ fn main() {
         },
         // Floor
         Object {
-            geometry: Geometry::new_plane(Vector3::new(0.0, 1.0, 0.0), -1.0),
+            geometry: Geometry::Triangle {
+                a: Vector3::new(red_wall_x, floor_y, back_wall_z),
+                b: Vector3::new(red_wall_x, floor_y, front_wall_z),
+                c: Vector3::new(green_wall_x, floor_y, back_wall_z),
+            },
+            material: Material {
+                diffusion: 1.0,
+                specularity: 0.0,
+                shininess: 0,
+                reflectance: 0.25,
+                color: Color::new(0.9, 0.8, 0.7),
+            },
+        },
+        Object {
+            geometry: Geometry::Triangle {
+                a: Vector3::new(green_wall_x, floor_y, front_wall_z),
+                b: Vector3::new(green_wall_x, floor_y, back_wall_z),
+                c: Vector3::new(red_wall_x, floor_y, front_wall_z),
+            },
             material: Material {
                 diffusion: 1.0,
                 specularity: 0.0,
@@ -77,7 +102,25 @@ fn main() {
         },
         // Red wall
         Object {
-            geometry: Geometry::new_plane(Vector3::new(1.0, 0.0, 0.0), -1.5),
+            geometry: Geometry::Triangle {
+                a: Vector3::new(red_wall_x, floor_y, front_wall_z),
+                b: Vector3::new(red_wall_x, floor_y, back_wall_z),
+                c: Vector3::new(red_wall_x, ceiling_y, front_wall_z),
+            },
+            material: Material {
+                diffusion: 1.0,
+                specularity: 0.0,
+                shininess: 0,
+                reflectance: 0.5,
+                color: Color::new(1.0, 0.0, 0.0),
+            },
+        },
+        Object {
+            geometry: Geometry::Triangle {
+                a: Vector3::new(red_wall_x, ceiling_y, back_wall_z),
+                b: Vector3::new(red_wall_x, ceiling_y, front_wall_z),
+                c: Vector3::new(red_wall_x, floor_y, back_wall_z),
+            },
             material: Material {
                 diffusion: 1.0,
                 specularity: 0.0,
@@ -88,7 +131,25 @@ fn main() {
         },
         // Green wall
         Object {
-            geometry: Geometry::new_plane(Vector3::new(-1.0, 0.0, 0.0), -1.5),
+            geometry: Geometry::Triangle {
+                a: Vector3::new(green_wall_x, floor_y, front_wall_z),
+                b: Vector3::new(green_wall_x, ceiling_y, front_wall_z),
+                c: Vector3::new(green_wall_x, floor_y, back_wall_z),
+            },
+            material: Material {
+                diffusion: 1.0,
+                specularity: 0.0,
+                shininess: 0,
+                reflectance: 0.5,
+                color: Color::new(0.0, 1.0, 0.0),
+            },
+        },
+        Object {
+            geometry: Geometry::Triangle {
+                a: Vector3::new(green_wall_x, ceiling_y, back_wall_z),
+                b: Vector3::new(green_wall_x, floor_y, back_wall_z),
+                c: Vector3::new(green_wall_x, ceiling_y, front_wall_z),
+            },
             material: Material {
                 diffusion: 1.0,
                 specularity: 0.0,
@@ -99,7 +160,11 @@ fn main() {
         },
         // Back wall
         Object {
-            geometry: Geometry::new_plane(Vector3::new(0.0, 0.0, 1.0), 5.0),
+            geometry: Geometry::Triangle {
+                a: Vector3::new(red_wall_x, ceiling_y, back_wall_z),
+                b: Vector3::new(red_wall_x, floor_y, back_wall_z),
+                c: Vector3::new(green_wall_x, ceiling_y, back_wall_z),
+            },
             material: Material {
                 diffusion: 1.0,
                 specularity: 0.0,
@@ -108,9 +173,12 @@ fn main() {
                 color: Color::new(0.9, 0.8, 0.7),
             },
         },
-        // Front wall
         Object {
-            geometry: Geometry::new_plane(Vector3::new(0.0, 0.0, -1.0), 11.0),
+            geometry: Geometry::Triangle {
+                a: Vector3::new(green_wall_x, floor_y, back_wall_z),
+                b: Vector3::new(green_wall_x, ceiling_y, back_wall_z),
+                c: Vector3::new(red_wall_x, floor_y, back_wall_z),
+            },
             material: Material {
                 diffusion: 1.0,
                 specularity: 0.0,
@@ -121,7 +189,25 @@ fn main() {
         },
         // Ceiling
         Object {
-            geometry: Geometry::new_plane(Vector3::new(0.0, -1.0, 0.0), -1.2),
+            geometry: Geometry::Triangle {
+                a: Vector3::new(green_wall_x, ceiling_y, front_wall_z),
+                b: Vector3::new(red_wall_x, ceiling_y, back_wall_z),
+                c: Vector3::new(green_wall_x, ceiling_y, back_wall_z),
+            },
+            material: Material {
+                diffusion: 1.0,
+                specularity: 0.0,
+                shininess: 0,
+                reflectance: 0.25,
+                color: Color::new(0.9, 0.8, 0.7),
+            },
+        },
+        Object {
+            geometry: Geometry::Triangle {
+                a: Vector3::new(green_wall_x, ceiling_y, front_wall_z),
+                b: Vector3::new(red_wall_x, ceiling_y, front_wall_z),
+                c: Vector3::new(red_wall_x, ceiling_y, back_wall_z),
+            },
             material: Material {
                 diffusion: 1.0,
                 specularity: 0.0,
@@ -132,10 +218,24 @@ fn main() {
         },
         // Light fixture
         Object {
-            geometry: Geometry::Parallelogram {
-                origin: Vector3::new(-0.5, 1.0, 6.3),
-                a: Vector3::new(1.0, 0.0, 0.0),
-                b: Vector3::new(0.0, 0.0, 1.0),
+            geometry: Geometry::Triangle {
+                a: Vector3::new(-0.5, 1.0, 6.3),
+                b: Vector3::new(0.5, 1.0, 6.3),
+                c: Vector3::new(-0.5, 1.0, 7.3),
+            },
+            material: Material {
+                diffusion: 0.0,
+                specularity: 1.0,
+                shininess: 0,
+                reflectance: 0.0,
+                color: Color::new(1.0, 1.0, 1.0),
+            },
+        },
+        Object {
+            geometry: Geometry::Triangle {
+                a: Vector3::new(0.5, 1.0, 7.3),
+                b: Vector3::new(0.5, 1.0, 6.3),
+                c: Vector3::new(-0.5, 1.0, 7.3),
             },
             material: Material {
                 diffusion: 0.0,
@@ -148,7 +248,7 @@ fn main() {
     ];
 
     let lights = vec![Light {
-        position: Vector3::new(0.0, 1.17, 5.8),
+        position: Vector3::new(0.0, 1.17, 6.0),
         color: Color::new(1.0, 1.0, 1.0),
     }];
 
