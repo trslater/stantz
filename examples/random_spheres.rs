@@ -43,7 +43,7 @@ fn main() {
                 center: Vector3::new(
                     lerp(-3.0, 3.0, rng.gen()),
                     lerp(-3.0, 3.0, rng.gen()),
-                    lerp(0.0, 4.0, rng.gen()),
+                    lerp(-10.0, -6.0, rng.gen()),
                 ),
                 radius: lerp(0.25, 1.0, rng.gen()),
             },
@@ -66,7 +66,7 @@ fn main() {
             position: Vector3::new(
                 lerp(-4.0, 4.0, rng.gen()),
                 lerp(-4.0, 4.0, rng.gen()),
-                lerp(-4.0, 8.0, rng.gen()),
+                lerp(-14.0, -2.0, rng.gen()),
             ),
             color: Color::new(
                 lerp(0.0, 1.0, rng.gen()),
@@ -77,7 +77,6 @@ fn main() {
         .collect();
 
     let camera = Camera {
-        origin: Vector3::new(0.0, 0.0, 10.0),
         fov: 45.0,
         focal_length: 15.0,
     };

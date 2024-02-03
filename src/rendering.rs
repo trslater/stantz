@@ -20,7 +20,8 @@ pub fn render(
     let num_pixels = image_width * image_height;
 
     let pixel_size = camera.focal_plane_height() / (image_height as f32);
-    let pixel_z = camera.focal_plane_z();
+    let pixel_z = -camera.focal_length;
+    let origin = Vector3::new(0.0, 0.0, 0.0);
 
     let pixels: Vec<Color> = (0..num_pixels)
         .map(|k| {
@@ -30,8 +31,7 @@ pub fn render(
             let pixel_x = (j as f32 - (image_width as f32 - 1.0) / 2.0) * pixel_size;
 
             let pixel_center = Vector3::new(pixel_x, pixel_y, pixel_z);
-            let pixel_color =
-                cast_ray(objects, lights, camera.origin, pixel_center - camera.origin);
+            let pixel_color = cast_ray(objects, lights, origin, pixel_center);
 
             pixel_color
         })

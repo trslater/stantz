@@ -39,14 +39,14 @@ fn main() {
     let red_wall_x: f32 = -1.5;
     let ceiling_y: f32 = 1.2;
     let floor_y: f32 = -1.0;
-    let back_wall_z: f32 = 5.0;
-    let front_wall_z: f32 = 11.0;
+    let back_wall_z: f32 = -5.0;
+    let front_wall_z: f32 = 1.0;
 
     let objects = vec![
         // Sphere 1
         Object {
             geometry: Geometry::Sphere {
-                center: Vector3::new(-0.5, -0.5, 6.0),
+                center: Vector3::new(-0.5, -0.5, -4.0),
                 radius: 0.5,
             },
             material: Material {
@@ -60,7 +60,7 @@ fn main() {
         // Sphere 2
         Object {
             geometry: Geometry::Sphere {
-                center: Vector3::new(0.5, -0.75, 6.0),
+                center: Vector3::new(0.5, -0.75, -4.0),
                 radius: 0.25,
             },
             material: Material {
@@ -219,9 +219,9 @@ fn main() {
         // Light fixture
         Object {
             geometry: Geometry::Triangle {
-                a: Vector3::new(-0.5, 1.0, 6.3),
-                b: Vector3::new(0.5, 1.0, 6.3),
-                c: Vector3::new(-0.5, 1.0, 7.3),
+                a: Vector3::new(-0.5, 1.0, -3.7),
+                b: Vector3::new(0.5, 1.0, -3.7),
+                c: Vector3::new(-0.5, 1.0, -2.7),
             },
             material: Material {
                 diffusion: 0.0,
@@ -233,9 +233,9 @@ fn main() {
         },
         Object {
             geometry: Geometry::Triangle {
-                a: Vector3::new(0.5, 1.0, 7.3),
-                b: Vector3::new(0.5, 1.0, 6.3),
-                c: Vector3::new(-0.5, 1.0, 7.3),
+                a: Vector3::new(0.5, 1.0, -2.7),
+                b: Vector3::new(0.5, 1.0, -3.7),
+                c: Vector3::new(-0.5, 1.0, -2.7),
             },
             material: Material {
                 diffusion: 0.0,
@@ -248,12 +248,11 @@ fn main() {
     ];
 
     let lights = vec![Light {
-        position: Vector3::new(0.0, 1.17, 6.0),
+        position: Vector3::new(0.0, 1.17, -4.0),
         color: Color::new(1.0, 1.0, 1.0),
     }];
 
     let camera = Camera {
-        origin: Vector3::new(0.0, 0.0, 10.0),
         fov: 45.0,
         focal_length: 15.0,
     };
