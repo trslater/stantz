@@ -52,7 +52,7 @@ fn cast_ray(
         .iter()
         .filter_map(|o| o.geometry.intersection(&ray).and_then(|t| Some((t, o))))
         // TODO: Does defaulting to less make sense?
-        .min_by(|(ta, _), (tb, _)| ta.partial_cmp(tb).unwrap_or(Ordering::Less))
+        .min_by(|(ta, _), (tb, _)| ta.total_cmp(tb))
         .map(|(t, Object { geometry, material })| {
             let hit_point = ray.point_at(t);
             let hit_normal = geometry.normal_at(&hit_point);
