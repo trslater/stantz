@@ -14,31 +14,30 @@ use stantz::materials::Material;
 use stantz::objects::Object;
 use stantz::rendering::render;
 
+const USAGE: &str =
+    "cargo run --example random_spheres NUM_SPHERES NUM_LIGHTS WIDTH HEIGHT FILENAME";
+
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    if args.len() == 1 {
-        println!("Must provide image width, height, and filename.");
-        process::exit(1);
-    } else if args.len() == 2 {
-        println!("Must provide image height and filename.");
-        process::exit(1);
-    } else if args.len() == 3 {
-        println!("Must provide filename.");
+    if args.len() < 5 {
+        println!("{}", USAGE);
         process::exit(1);
     }
 
-    let width = args[1]
+    let num_spheres = args[1]
         .parse::<u32>()
-        .expect("Image width must be an integer");
-    let height = args[2]
+        .expect("NUM_SPHERES must be an integer");
+    let num_lights = args[2]
         .parse::<u32>()
-        .expect("Image height must be an integer");
-    let filename = &args[3];
+        .expect("NUM_LIGHTS must be an integer");
+    let width = args[3].parse::<u32>().expect("WIDTH must be an integer");
+    let height = args[4].parse::<u32>().expect("HEIGHT must be an integer");
+    let filename = &args[5];
 
     let mut rng = rand::thread_rng();
 
-    let objects = (0..10)
+    let objects = (0..num_spheres)
         .map(|_| Object {
             geometry: Geometry::Sphere {
                 center: Vector3::new(
@@ -62,7 +61,7 @@ fn main() {
         })
         .collect();
 
-    let lights = (0..4)
+    let lights = (0..num_lights)
         .map(|_| Light {
             position: Vector3::new(
                 lerp(-4.0, 4.0, rng.gen()),
