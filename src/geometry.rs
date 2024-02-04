@@ -1,5 +1,7 @@
 use na::{Matrix3, Vector3};
 
+use crate::bvh::{MakeAABB, AABB};
+
 use ray::Ray;
 
 pub mod ray {
@@ -41,6 +43,17 @@ pub enum Geometry {
 }
 
 impl Geometry {
+    pub fn center(&self) -> Vector3<f32> {
+        match self {
+            Geometry::Sphere { center, .. } => *center,
+            Geometry::Triangle { a, b, c } => Vector3::new(
+                [a.x, b.x, c.x].iter().sum::<f32>() / 3.0,
+                [a.y, b.y, c.y].iter().sum::<f32>() / 3.0,
+                [a.z, b.z, c.z].iter().sum::<f32>() / 3.0,
+            ),
+        }
+    }
+
     pub fn normal_at(&self, point: &Vector3<f32>) -> Vector3<f32> {
         match self {
             Geometry::Sphere { center, .. } => (point - center).normalize(),
@@ -92,6 +105,39 @@ impl Geometry {
                         u >= &0.0 && u <= &1.0 && v >= &0.0 && v <= &1.0 && w >= 0.0 && w <= 1.0
                     })
                     .map(|[.., t]| t)
+            }
+        }
+    }
+}
+
+impl MakeAABB for Geometry {
+    fn make_aabb(&self) -> AABB {
+        match self {
+            Geometry::Sphere { center, radius } => AABB {
+                x_lower: center.x - radius,
+                x_upper: center.x + radius,
+                y_lower: center.y - radius,
+                y_upper: center.y + radius,
+                z_lower: center.z - radius,
+                z_upper: center.z + radius,
+            },
+            Geometry::Triangle { a, b, c } => {
+                // TODO: See if this can be done immutably
+                let mut xs = [a.x, b.x, c.x];
+                xs.sort_by(|a, b| a.total_cmp(b));
+                let mut ys = [a.y, b.y, c.y];
+                ys.sort_by(|a, b| a.total_cmp(b));
+                let mut zs = [a.z, b.z, c.z];
+                zs.sort_by(|a, b| a.total_cmp(b));
+
+                AABB {
+                    x_lower: xs[0],
+                    x_upper: xs[2],
+                    y_lower: ys[0],
+                    y_upper: ys[2],
+                    z_lower: zs[0],
+                    z_upper: zs[2],
+                }
             }
         }
     }
