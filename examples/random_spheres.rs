@@ -1,6 +1,8 @@
 extern crate nalgebra as na;
+extern crate rand_pcg;
 
-use rand::prelude::*;
+use rand::Rng;
+use rand_pcg::Pcg32;
 use std::env;
 use std::process;
 
@@ -15,12 +17,12 @@ use stantz::objects::Object;
 use stantz::rendering::render;
 
 const USAGE: &str =
-    "cargo run --example random_spheres NUM_SPHERES NUM_LIGHTS WIDTH HEIGHT FILENAME";
+    "cargo run --example random_spheres NUM_SPHERES NUM_LIGHTS SEED WIDTH HEIGHT FILENAME";
 
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    if args.len() < 5 {
+    if args.len() < 6 {
         println!("{}", USAGE);
         process::exit(1);
     }
@@ -31,31 +33,32 @@ fn main() {
     let num_lights = args[2]
         .parse::<u32>()
         .expect("NUM_LIGHTS must be an integer");
-    let width = args[3].parse::<u32>().expect("WIDTH must be an integer");
-    let height = args[4].parse::<u32>().expect("HEIGHT must be an integer");
-    let filename = &args[5];
+    let seed = args[3].parse::<u64>().expect("SEED must be an integer");
+    let width = args[4].parse::<u32>().expect("WIDTH must be an integer");
+    let height = args[5].parse::<u32>().expect("HEIGHT must be an integer");
+    let filename = &args[6];
 
-    let mut rng = rand::thread_rng();
+    let mut rng = Pcg32::new(seed, 0);
 
     let objects = (0..num_spheres)
         .map(|_| Object {
             geometry: Geometry::Sphere {
                 center: Vector3::new(
-                    lerp(-3.0, 3.0, rng.gen()),
-                    lerp(-3.0, 3.0, rng.gen()),
-                    lerp(-10.0, -6.0, rng.gen()),
+                    lerp(-3.0, 3.0, rng.gen::<f32>()),   // / u32::MAX as f32),
+                    lerp(-3.0, 3.0, rng.gen::<f32>()),   // / u32::MAX as f32),
+                    lerp(-10.0, -6.0, rng.gen::<f32>()), // / u32::MAX as f32),
                 ),
-                radius: lerp(0.25, 1.0, rng.gen()),
+                radius: lerp(0.25, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
             },
             material: Material {
-                diffusion: lerp(0.0, 1.0, rng.gen()),
-                specularity: lerp(0.0, 1.0, rng.gen()),
-                shininess: lerp(0.0, 100.0, rng.gen()) as i32,
-                reflectance: lerp(0.0, 1.0, rng.gen()),
+                diffusion: lerp(0.0, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
+                specularity: lerp(0.0, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
+                shininess: lerp(0.0, 100.0, rng.gen::<f32>()) as i32, // / u32::MAX as f32) as i32,
+                reflectance: lerp(0.0, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
                 color: Color::new(
-                    lerp(0.0, 1.0, rng.gen()),
-                    lerp(0.0, 1.0, rng.gen()),
-                    lerp(0.0, 1.0, rng.gen()),
+                    lerp(0.0, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
+                    lerp(0.0, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
+                    lerp(0.0, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
                 ),
             },
         })
@@ -64,14 +67,14 @@ fn main() {
     let lights = (0..num_lights)
         .map(|_| Light {
             position: Vector3::new(
-                lerp(-4.0, 4.0, rng.gen()),
-                lerp(-4.0, 4.0, rng.gen()),
-                lerp(-14.0, -2.0, rng.gen()),
+                lerp(-4.0, 4.0, rng.gen::<f32>()),   // / u32::MAX as f32),
+                lerp(-4.0, 4.0, rng.gen::<f32>()),   // / u32::MAX as f32),
+                lerp(-14.0, -2.0, rng.gen::<f32>()), // / u32::MAX as f32),
             ),
             color: Color::new(
-                lerp(0.0, 1.0, rng.gen()),
-                lerp(0.0, 1.0, rng.gen()),
-                lerp(0.0, 1.0, rng.gen()),
+                lerp(0.0, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
+                lerp(0.0, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
+                lerp(0.0, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
             ),
         })
         .collect();
