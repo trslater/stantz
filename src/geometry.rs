@@ -30,6 +30,7 @@ pub mod ray {
     }
 }
 
+#[derive(Debug)]
 pub enum Geometry {
     Sphere {
         center: Vector3<f32>,

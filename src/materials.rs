@@ -1,5 +1,6 @@
 use crate::lighting::Color;
 
+#[derive(Debug)]
 pub struct Material {
     pub diffusion: f32,
     pub specularity: f32,

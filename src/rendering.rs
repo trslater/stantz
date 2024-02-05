@@ -1,16 +1,13 @@
-use std::cmp::Ordering;
-
 use image::RgbImage;
 use na::Vector3;
 
 use crate::cameras::Camera;
-use crate::geometry::ray::Ray;
-use crate::lighting::Color;
-use crate::lighting::Light;
-use crate::objects::Object;
+use crate::geometry::{ray::Ray, Geometry};
+use crate::lighting::{Color, Light};
+use crate::materials::Material;
 
 pub fn render(
-    objects: &Vec<Object>,
+    objects: &Vec<(Geometry, Material)>,
     lights: &Vec<Light>,
     camera: &Camera,
     image_width: u32,
@@ -41,7 +38,7 @@ pub fn render(
 }
 
 fn cast_ray(
-    objects: &Vec<Object>,
+    objects: &Vec<(Geometry, Material)>,
     lights: &Vec<Light>,
     origin: Vector3<f32>,
     direction: Vector3<f32>,
@@ -50,10 +47,14 @@ fn cast_ray(
 
     objects
         .iter()
-        .filter_map(|o| o.geometry.intersection(&ray).and_then(|t| Some((t, o))))
+        .filter_map(|(geometry, material)| {
+            geometry
+                .intersection(&ray)
+                .and_then(|t| Some((t, (geometry, material))))
+        })
         // TODO: Does defaulting to less make sense?
         .min_by(|(ta, _), (tb, _)| ta.total_cmp(tb))
-        .map(|(t, Object { geometry, material })| {
+        .map(|(t, (geometry, material))| {
             let hit_point = ray.point_at(t);
             let hit_normal = geometry.normal_at(&hit_point);
 

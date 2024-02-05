@@ -1,4 +1,5 @@
-use crate::objects::Object;
+use crate::geometry::Geometry;
+use crate::materials::Material;
 
 #[derive(Debug)]
 pub struct AABB {
@@ -23,7 +24,7 @@ pub struct BVH<'a> {
 // Ideally, object should only be Some when both children are None
 pub struct BVHNode<'a> {
     pub aabb: AABB,
-    pub object: Option<&'a Object>,
+    pub object: Option<&'a (Geometry, Material)>,
     pub left_child: Option<Box<Self>>,
     pub right_child: Option<Box<Self>>,
 }

@@ -13,7 +13,6 @@ use stantz::geometry::Geometry;
 use stantz::lighting::Color;
 use stantz::lighting::Light;
 use stantz::materials::Material;
-use stantz::objects::Object;
 use stantz::rendering::render;
 
 const USAGE: &str =
@@ -41,26 +40,28 @@ fn main() {
     let mut rng = Pcg32::new(seed, 0);
 
     let objects = (0..num_spheres)
-        .map(|_| Object {
-            geometry: Geometry::Sphere {
-                center: Vector3::new(
-                    lerp(-3.0, 3.0, rng.gen::<f32>()),   // / u32::MAX as f32),
-                    lerp(-3.0, 3.0, rng.gen::<f32>()),   // / u32::MAX as f32),
-                    lerp(-10.0, -6.0, rng.gen::<f32>()), // / u32::MAX as f32),
-                ),
-                radius: lerp(0.25, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
-            },
-            material: Material {
-                diffusion: lerp(0.0, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
-                specularity: lerp(0.0, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
-                shininess: lerp(0.0, 100.0, rng.gen::<f32>()) as i32, // / u32::MAX as f32) as i32,
-                reflectance: lerp(0.0, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
-                color: Color::new(
-                    lerp(0.0, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
-                    lerp(0.0, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
-                    lerp(0.0, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
-                ),
-            },
+        .map(|_| {
+            (
+                Geometry::Sphere {
+                    center: Vector3::new(
+                        lerp(-3.0, 3.0, rng.gen::<f32>()),   // / u32::MAX as f32),
+                        lerp(-3.0, 3.0, rng.gen::<f32>()),   // / u32::MAX as f32),
+                        lerp(-10.0, -6.0, rng.gen::<f32>()), // / u32::MAX as f32),
+                    ),
+                    radius: lerp(0.25, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
+                },
+                Material {
+                    diffusion: lerp(0.0, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
+                    specularity: lerp(0.0, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
+                    shininess: lerp(0.0, 100.0, rng.gen::<f32>()) as i32, // / u32::MAX as f32) as i32,
+                    reflectance: lerp(0.0, 1.0, rng.gen::<f32>()),        // / u32::MAX as f32),
+                    color: Color::new(
+                        lerp(0.0, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
+                        lerp(0.0, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
+                        lerp(0.0, 1.0, rng.gen::<f32>()), // / u32::MAX as f32),
+                    ),
+                },
+            )
         })
         .collect();
 

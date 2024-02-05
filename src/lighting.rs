@@ -2,6 +2,7 @@ use std::{iter::Sum, ops};
 
 use na::Vector3;
 
+#[derive(Debug)]
 pub struct Color {
     red: f32,
     green: f32,
