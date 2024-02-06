@@ -1,5 +1,3 @@
-use na::Vector3;
-
 pub struct Camera {
     pub fov: f32,
     pub focal_length: f32,
