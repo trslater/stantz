@@ -1,7 +1,27 @@
 # Stantz
 
-## Run Examples
+## Examples
+
+### Cornell Box
+
+My take on the famous rendering demo scene.
+
+Usage:
 
 ```
-cargo run --example EXAMPLE WIDTH HEIGHT FILENAME
+cargo run --example cornell_box WIDTH HEIGHT FILE
 ```
+
+### Random Spheres
+
+Generates `NUM_SPHERES` spheres with random sizes, positions, colours, and materials, and also `NUM_LIGHTS` random lights with random positions and colours. `SEED` allows recreating the same scene.
+
+Usage:
+
+```
+cargo run --example random_spheres NUM_SPHERES NUM_LIGHTS SEED WIDTH HEIGHT FILE
+```
+
+## References
+
+- https://www.cs.cmu.edu/~blelloch/papers/GHFB13.pdf
