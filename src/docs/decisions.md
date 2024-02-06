@@ -4,3 +4,9 @@
   - Issues:
     - Could have a node with an object that still has children
       - This would also be a limitation of having node value be either (Geometry, Material) tuple or AABB
+- Camera is fixed at origin, and faces the negative z direction
+  - This simplifies calculations and facilitates comprehension
+- Ray is in its own module to avoid writing a non-unit vector to direction
+  - A unit direction vector removes the need to normalize during ray casting which speeds up rendering
+  - A non-unit direction vector would throw off colour calculations
+- I decided to remove planes to facilitate constructing BVH
