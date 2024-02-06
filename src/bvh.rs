@@ -3,12 +3,12 @@ use crate::materials::Material;
 
 #[derive(Debug)]
 pub struct AABB {
-    pub x_lower: f32,
-    pub x_upper: f32,
-    pub y_lower: f32,
-    pub y_upper: f32,
-    pub z_lower: f32,
-    pub z_upper: f32,
+    pub left: f32,
+    pub right: f32,
+    pub bottom: f32,
+    pub top: f32,
+    pub back: f32,
+    pub front: f32,
 }
 
 pub trait MakeAABB {

@@ -115,12 +115,12 @@ impl MakeAABB for Geometry {
     fn make_aabb(&self) -> AABB {
         match self {
             Geometry::Sphere { center, radius } => AABB {
-                x_lower: center.x - radius,
-                x_upper: center.x + radius,
-                y_lower: center.y - radius,
-                y_upper: center.y + radius,
-                z_lower: center.z - radius,
-                z_upper: center.z + radius,
+                left: center.x - radius,
+                right: center.x + radius,
+                bottom: center.y - radius,
+                top: center.y + radius,
+                back: center.z - radius,
+                front: center.z + radius,
             },
             Geometry::Triangle { a, b, c } => {
                 // TODO: See if this can be done immutably
@@ -132,12 +132,12 @@ impl MakeAABB for Geometry {
                 zs.sort_by(|a, b| a.total_cmp(b));
 
                 AABB {
-                    x_lower: xs[0],
-                    x_upper: xs[2],
-                    y_lower: ys[0],
-                    y_upper: ys[2],
-                    z_lower: zs[0],
-                    z_upper: zs[2],
+                    left: xs[0],
+                    right: xs[2],
+                    bottom: ys[0],
+                    top: ys[2],
+                    back: zs[0],
+                    front: zs[2],
                 }
             }
         }
