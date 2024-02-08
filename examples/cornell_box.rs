@@ -7,6 +7,8 @@ use na::Vector3;
 
 use stantz::cameras::Camera;
 use stantz::geometry::Geometry;
+use stantz::geometry::SphereGeometry;
+use stantz::geometry::TriangleGeometry;
 use stantz::lighting::Color;
 use stantz::lighting::Light;
 use stantz::materials::Material;
@@ -44,10 +46,10 @@ fn main() {
     let objects = vec![
         // Sphere 1
         (
-            Geometry::Sphere {
+            Geometry::Sphere(SphereGeometry {
                 center: Vector3::new(-0.5, -0.5, -4.0),
                 radius: 0.5,
-            },
+            }),
             Material {
                 diffusion: 0.3,
                 specularity: 1.0,
@@ -58,10 +60,10 @@ fn main() {
         ),
         // Sphere 2
         (
-            Geometry::Sphere {
+            Geometry::Sphere(SphereGeometry {
                 center: Vector3::new(0.5, -0.75, -4.0),
                 radius: 0.25,
-            },
+            }),
             Material {
                 diffusion: 0.75,
                 specularity: 0.25,
@@ -72,11 +74,11 @@ fn main() {
         ),
         // Floor
         (
-            Geometry::Triangle {
+            Geometry::Triangle(TriangleGeometry {
                 a: Vector3::new(red_wall_x, floor_y, back_wall_z),
                 b: Vector3::new(red_wall_x, floor_y, front_wall_z),
                 c: Vector3::new(green_wall_x, floor_y, back_wall_z),
-            },
+            }),
             Material {
                 diffusion: 1.0,
                 specularity: 0.0,
@@ -86,11 +88,11 @@ fn main() {
             },
         ),
         (
-            Geometry::Triangle {
+            Geometry::Triangle(TriangleGeometry {
                 a: Vector3::new(green_wall_x, floor_y, front_wall_z),
                 b: Vector3::new(green_wall_x, floor_y, back_wall_z),
                 c: Vector3::new(red_wall_x, floor_y, front_wall_z),
-            },
+            }),
             Material {
                 diffusion: 1.0,
                 specularity: 0.0,
@@ -101,11 +103,11 @@ fn main() {
         ),
         // Red wall
         (
-            Geometry::Triangle {
+            Geometry::Triangle(TriangleGeometry {
                 a: Vector3::new(red_wall_x, floor_y, front_wall_z),
                 b: Vector3::new(red_wall_x, floor_y, back_wall_z),
                 c: Vector3::new(red_wall_x, ceiling_y, front_wall_z),
-            },
+            }),
             Material {
                 diffusion: 1.0,
                 specularity: 0.0,
@@ -115,11 +117,11 @@ fn main() {
             },
         ),
         (
-            Geometry::Triangle {
+            Geometry::Triangle(TriangleGeometry {
                 a: Vector3::new(red_wall_x, ceiling_y, back_wall_z),
                 b: Vector3::new(red_wall_x, ceiling_y, front_wall_z),
                 c: Vector3::new(red_wall_x, floor_y, back_wall_z),
-            },
+            }),
             Material {
                 diffusion: 1.0,
                 specularity: 0.0,
@@ -130,11 +132,11 @@ fn main() {
         ),
         // Green wall
         (
-            Geometry::Triangle {
+            Geometry::Triangle(TriangleGeometry {
                 a: Vector3::new(green_wall_x, floor_y, front_wall_z),
                 b: Vector3::new(green_wall_x, ceiling_y, front_wall_z),
                 c: Vector3::new(green_wall_x, floor_y, back_wall_z),
-            },
+            }),
             Material {
                 diffusion: 1.0,
                 specularity: 0.0,
@@ -144,11 +146,11 @@ fn main() {
             },
         ),
         (
-            Geometry::Triangle {
+            Geometry::Triangle(TriangleGeometry {
                 a: Vector3::new(green_wall_x, ceiling_y, back_wall_z),
                 b: Vector3::new(green_wall_x, floor_y, back_wall_z),
                 c: Vector3::new(green_wall_x, ceiling_y, front_wall_z),
-            },
+            }),
             Material {
                 diffusion: 1.0,
                 specularity: 0.0,
@@ -159,11 +161,11 @@ fn main() {
         ),
         // Back wall
         (
-            Geometry::Triangle {
+            Geometry::Triangle(TriangleGeometry {
                 a: Vector3::new(red_wall_x, ceiling_y, back_wall_z),
                 b: Vector3::new(red_wall_x, floor_y, back_wall_z),
                 c: Vector3::new(green_wall_x, ceiling_y, back_wall_z),
-            },
+            }),
             Material {
                 diffusion: 1.0,
                 specularity: 0.0,
@@ -173,11 +175,11 @@ fn main() {
             },
         ),
         (
-            Geometry::Triangle {
+            Geometry::Triangle(TriangleGeometry {
                 a: Vector3::new(green_wall_x, floor_y, back_wall_z),
                 b: Vector3::new(green_wall_x, ceiling_y, back_wall_z),
                 c: Vector3::new(red_wall_x, floor_y, back_wall_z),
-            },
+            }),
             Material {
                 diffusion: 1.0,
                 specularity: 0.0,
@@ -188,11 +190,11 @@ fn main() {
         ),
         // Ceiling
         (
-            Geometry::Triangle {
+            Geometry::Triangle(TriangleGeometry {
                 a: Vector3::new(green_wall_x, ceiling_y, front_wall_z),
                 b: Vector3::new(red_wall_x, ceiling_y, back_wall_z),
                 c: Vector3::new(green_wall_x, ceiling_y, back_wall_z),
-            },
+            }),
             Material {
                 diffusion: 1.0,
                 specularity: 0.0,
@@ -202,11 +204,11 @@ fn main() {
             },
         ),
         (
-            Geometry::Triangle {
+            Geometry::Triangle(TriangleGeometry {
                 a: Vector3::new(green_wall_x, ceiling_y, front_wall_z),
                 b: Vector3::new(red_wall_x, ceiling_y, front_wall_z),
                 c: Vector3::new(red_wall_x, ceiling_y, back_wall_z),
-            },
+            }),
             Material {
                 diffusion: 1.0,
                 specularity: 0.0,
@@ -217,11 +219,11 @@ fn main() {
         ),
         // Light fixture
         (
-            Geometry::Triangle {
+            Geometry::Triangle(TriangleGeometry {
                 a: Vector3::new(-0.5, 1.0, -3.7),
                 b: Vector3::new(0.5, 1.0, -3.7),
                 c: Vector3::new(-0.5, 1.0, -2.7),
-            },
+            }),
             Material {
                 diffusion: 0.0,
                 specularity: 1.0,
@@ -231,11 +233,11 @@ fn main() {
             },
         ),
         (
-            Geometry::Triangle {
+            Geometry::Triangle(TriangleGeometry {
                 a: Vector3::new(0.5, 1.0, -2.7),
                 b: Vector3::new(0.5, 1.0, -3.7),
                 c: Vector3::new(-0.5, 1.0, -2.7),
-            },
+            }),
             Material {
                 diffusion: 0.0,
                 specularity: 1.0,

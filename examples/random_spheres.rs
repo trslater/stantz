@@ -3,13 +3,13 @@ extern crate rand_pcg;
 
 use rand::Rng;
 use rand_pcg::Pcg32;
+use stantz::geometry::SphereGeometry;
 use std::env;
 use std::process;
 
 use na::Vector3;
 
 use stantz::cameras::Camera;
-use stantz::geometry::Geometry;
 use stantz::lighting::Color;
 use stantz::lighting::Light;
 use stantz::materials::Material;
@@ -42,7 +42,7 @@ fn main() {
     let objects = (0..num_spheres)
         .map(|_| {
             (
-                Geometry::Sphere {
+                SphereGeometry {
                     center: Vector3::new(
                         lerp(-3.0, 3.0, rng.gen::<f32>()),
                         lerp(-3.0, 3.0, rng.gen::<f32>()),

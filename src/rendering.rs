@@ -2,12 +2,12 @@ use image::RgbImage;
 use na::Vector3;
 
 use crate::cameras::Camera;
-use crate::geometry::{ray::Ray, Geometry};
+use crate::geometry::{ray::Ray, Intersection, NormalAt};
 use crate::lighting::{Color, Light};
 use crate::materials::Material;
 
 pub fn render(
-    objects: &Vec<(Geometry, Material)>,
+    objects: &Vec<(impl Intersection + NormalAt, Material)>,
     lights: &Vec<Light>,
     camera: &Camera,
     image_width: u32,
@@ -38,7 +38,7 @@ pub fn render(
 }
 
 fn cast_ray(
-    objects: &Vec<(Geometry, Material)>,
+    objects: &Vec<(impl Intersection + NormalAt, Material)>,
     lights: &Vec<Light>,
     origin: Vector3<f32>,
     direction: Vector3<f32>,
