@@ -1,6 +1,6 @@
 pub mod ray;
 
-use na::{geometry, Matrix3, Vector3};
+use na::{Matrix3, Vector3};
 use ray::Ray;
 
 #[derive(Debug, Clone)]
@@ -43,6 +43,16 @@ pub trait Intersection {
 
 pub trait AABB {
     fn aabb(&self) -> AABoxGeometry;
+}
+
+impl Center for Geometry {
+    fn center(&self) -> Vector3<f32> {
+        match self {
+            Geometry::AABox(aa_box) => aa_box.center(),
+            Geometry::Sphere(sphere) => sphere.center(),
+            Geometry::Triangle(triangle) => triangle.center(),
+        }
+    }
 }
 
 impl NormalAt for Geometry {
