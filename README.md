@@ -22,6 +22,13 @@ Usage:
 cargo run --example random_spheres NUM_SPHERES NUM_LIGHTS SEED WIDTH HEIGHT FILE
 ```
 
+## Roadmap
+
+- [x] Finalize object/material coupling
+- [ ] Implement BVH
+- [ ] Implement reflections
+- [ ] Transition to path tracing
+
 ## References
 
 - https://www.cs.cmu.edu/~blelloch/papers/GHFB13.pdf
