@@ -1,8 +1,7 @@
 extern crate nalgebra as na;
 extern crate rand_pcg;
 
-use std::env;
-use std::process;
+use std::{env, process, time::Instant};
 
 use na::Vector3;
 use rand::Rng;
@@ -97,7 +96,9 @@ fn main() {
         focal_length: 15.0,
     };
 
+    let now = Instant::now();
     render(&objects, &lights, &camera, width, height, filename);
+    println!("Random spheres rendered in {:.2?}", now.elapsed());
 }
 
 fn lerp(a: f32, b: f32, t: f32) -> f32 {

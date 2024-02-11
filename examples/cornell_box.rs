@@ -1,7 +1,6 @@
 extern crate nalgebra as na;
 
-use std::env;
-use std::process;
+use std::{env, process, time::Instant};
 
 use na::Vector3;
 
@@ -211,5 +210,7 @@ fn main() {
         focal_length: 15.0,
     };
 
+    let now = Instant::now();
     render(&objects, &lights, &camera, width, height, filename);
+    println!("Cornell Box rendered in {:.2?}", now.elapsed());
 }
