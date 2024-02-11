@@ -139,11 +139,18 @@ fn main() {
         }),
     ];
 
-    let ceiling_mesh = vec![Geometry::Triangle(TriangleGeometry {
-        a: Vector3::new(green_wall_x, ceiling_y, front_wall_z),
-        b: Vector3::new(red_wall_x, ceiling_y, back_wall_z),
-        c: Vector3::new(green_wall_x, ceiling_y, back_wall_z),
-    })];
+    let ceiling_mesh = vec![
+        Geometry::Triangle(TriangleGeometry {
+            a: Vector3::new(green_wall_x, ceiling_y, front_wall_z),
+            b: Vector3::new(red_wall_x, ceiling_y, back_wall_z),
+            c: Vector3::new(green_wall_x, ceiling_y, back_wall_z),
+        }),
+        Geometry::Triangle(TriangleGeometry {
+            a: Vector3::new(red_wall_x, ceiling_y, back_wall_z),
+            b: Vector3::new(green_wall_x, ceiling_y, front_wall_z),
+            c: Vector3::new(red_wall_x, ceiling_y, front_wall_z),
+        }),
+    ];
 
     let light_fixture_mesh = vec![
         Geometry::Triangle(TriangleGeometry {
@@ -201,7 +208,7 @@ fn main() {
     ];
 
     let lights = vec![Light {
-        position: Vector3::new(0.0, 1.17, -4.0),
+        position: Vector3::new(0.0, 0.8, -4.0),
         color: Color::new(1.0, 1.0, 1.0),
     }];
 
