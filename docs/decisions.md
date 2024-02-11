@@ -10,3 +10,13 @@
   - A unit direction vector removes the need to normalize during ray casting which speeds up rendering
   - A non-unit direction vector would throw off colour calculations
 - I decided to remove planes to facilitate constructing BVH
+
+## Geometries
+
+- The geometries are their own classes with the various traits defined on them as well as a variants in an enum
+- Rationale:
+  - Separate w/ traits
+    - Allows specific geometries to be required without need for pattern matching in cases like BVH
+  - Enum variants
+    - Enum variants are easier to use and more performant where specific type is unknown
+  - Traits allow functions to check for specific things objects need to do

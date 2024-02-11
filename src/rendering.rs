@@ -1,19 +1,26 @@
 use image::RgbImage;
 use na::Vector3;
 
-use crate::cameras::Camera;
-use crate::geometry::{ray::Ray, Intersection, NormalAt};
-use crate::lighting::{Color, Light};
-use crate::materials::Material;
+use crate::{
+    cameras::Camera,
+    geometry::{ray::Ray, Geometry, Intersection, NormalAt},
+    lighting::{Color, Light},
+    materials::Material,
+    objects::Object,
+};
 
 pub fn render(
-    objects: &Vec<(impl Intersection + NormalAt, Material)>,
+    objects: &Vec<Object>,
     lights: &Vec<Light>,
     camera: &Camera,
     image_width: u32,
     image_height: u32,
     filename: &String,
 ) {
+    // Collect entries here, so it isn't repeated for every ray
+    let entries: Vec<(&Geometry, &Material)> =
+        objects.iter().flat_map(|object| object.iter()).collect();
+
     let num_pixels = image_width * image_height;
 
     let pixel_size = camera.focal_plane_height() / (image_height as f32);
@@ -24,11 +31,11 @@ pub fn render(
         .map(|k| {
             let [i, j] = [k / image_width, k % image_width];
 
-            let pixel_y = -(i as f32 - (image_height as f32 - 1.0) / 2.0) * pixel_size;
             let pixel_x = (j as f32 - (image_width as f32 - 1.0) / 2.0) * pixel_size;
+            let pixel_y = -(i as f32 - (image_height as f32 - 1.0) / 2.0) * pixel_size;
 
             let pixel_center = Vector3::new(pixel_x, pixel_y, pixel_z);
-            let pixel_color = cast_ray(objects, lights, origin, pixel_center);
+            let pixel_color = cast_ray(&entries, lights, origin, pixel_center);
 
             pixel_color
         })
@@ -38,14 +45,14 @@ pub fn render(
 }
 
 fn cast_ray(
-    objects: &Vec<(impl Intersection + NormalAt, Material)>,
+    entries: &Vec<(&Geometry, &Material)>,
     lights: &Vec<Light>,
     origin: Vector3<f32>,
     direction: Vector3<f32>,
 ) -> Color {
     let ray = Ray::new(origin, direction);
 
-    objects
+    entries
         .iter()
         .filter_map(|(geometry, material)| {
             geometry

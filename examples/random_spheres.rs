@@ -1,19 +1,21 @@
 extern crate nalgebra as na;
 extern crate rand_pcg;
 
-use rand::Rng;
-use rand_pcg::Pcg32;
-use stantz::geometry::SphereGeometry;
 use std::env;
 use std::process;
 
 use na::Vector3;
+use rand::Rng;
+use rand_pcg::Pcg32;
 
-use stantz::cameras::Camera;
-use stantz::lighting::Color;
-use stantz::lighting::Light;
-use stantz::materials::Material;
-use stantz::rendering::render;
+use stantz::{
+    cameras::Camera,
+    geometry::{Geometry, SphereGeometry},
+    lighting::{Color, Light},
+    materials::Material,
+    objects::Object,
+    rendering::render,
+};
 
 const USAGE: &str =
     "cargo run --example random_spheres NUM_SPHERES NUM_LIGHTS SEED WIDTH HEIGHT FILENAME";
@@ -39,29 +41,39 @@ fn main() {
 
     let mut rng = Pcg32::new(seed, 0);
 
-    let objects = (0..num_spheres)
+    let spheres_meshes: Vec<Vec<Geometry>> = (0..num_spheres)
         .map(|_| {
-            (
-                SphereGeometry {
-                    center: Vector3::new(
-                        lerp(-3.0, 3.0, rng.gen::<f32>()),
-                        lerp(-3.0, 3.0, rng.gen::<f32>()),
-                        lerp(-10.0, -6.0, rng.gen::<f32>()),
-                    ),
-                    radius: lerp(0.25, 1.0, rng.gen::<f32>()),
-                },
-                Material {
-                    diffusion: lerp(0.0, 1.0, rng.gen::<f32>()),
-                    specularity: lerp(0.0, 1.0, rng.gen::<f32>()),
-                    shininess: lerp(0.0, 100.0, rng.gen::<f32>()) as i32,
-                    reflectance: lerp(0.0, 1.0, rng.gen::<f32>()),
-                    color: Color::new(
-                        lerp(0.0, 1.0, rng.gen::<f32>()),
-                        lerp(0.0, 1.0, rng.gen::<f32>()),
-                        lerp(0.0, 1.0, rng.gen::<f32>()),
-                    ),
-                },
-            )
+            vec![Geometry::Sphere(SphereGeometry {
+                center: Vector3::new(
+                    lerp(-3.0, 3.0, rng.gen::<f32>()),
+                    lerp(-3.0, 3.0, rng.gen::<f32>()),
+                    lerp(-10.0, -6.0, rng.gen::<f32>()),
+                ),
+                radius: lerp(0.25, 1.0, rng.gen::<f32>()),
+            })]
+        })
+        .collect();
+
+    let materials: Vec<Material> = (0..num_spheres)
+        .map(|_| Material {
+            diffusion: lerp(0.0, 1.0, rng.gen::<f32>()),
+            specularity: lerp(0.0, 1.0, rng.gen::<f32>()),
+            shininess: lerp(0.0, 100.0, rng.gen::<f32>()) as i32,
+            reflectance: lerp(0.0, 1.0, rng.gen::<f32>()),
+            color: Color::new(
+                lerp(0.0, 1.0, rng.gen::<f32>()),
+                lerp(0.0, 1.0, rng.gen::<f32>()),
+                lerp(0.0, 1.0, rng.gen::<f32>()),
+            ),
+        })
+        .collect();
+
+    let objects: Vec<Object> = spheres_meshes
+        .iter()
+        .zip(materials.iter())
+        .map(|(mesh, material)| Object {
+            mesh: mesh,
+            material: material,
         })
         .collect();
 
