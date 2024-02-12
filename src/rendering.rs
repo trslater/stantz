@@ -3,7 +3,7 @@ use na::Vector3;
 
 use crate::{
     cameras::Camera,
-    geometry::{ray::Ray, Geometry, Intersection, NormalAt},
+    geometry::{ray::Ray, Geometry, NormalAt},
     lighting::{Color, Light},
     materials::Material,
     objects::Object,
@@ -55,8 +55,7 @@ fn cast_ray(
     entries
         .iter()
         .filter_map(|(geometry, material)| {
-            geometry
-                .intersection(&ray)
+            ray.hits_at(geometry)
                 .and_then(|t| Some((t, (geometry, material))))
         })
         // TODO: Does defaulting to less make sense?

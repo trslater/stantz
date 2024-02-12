@@ -1,6 +1,6 @@
-use na::{Matrix3, Vector3};
+use na::Vector3;
 
-use crate::geometry::{aa_box::AABoxGeometry, ray::Ray, Center, Intersection, NormalAt, AABB};
+use crate::geometry::{aa_box::AABoxGeometry, Center, NormalAt, AABB};
 
 #[derive(Debug, Clone)]
 pub struct TriangleGeometry {
@@ -22,21 +22,6 @@ impl Center for TriangleGeometry {
 impl NormalAt for TriangleGeometry {
     fn normal_at(&self, _: &Vector3<f32>) -> Vector3<f32> {
         (self.b - self.a).cross(&(self.c - self.a)).normalize()
-    }
-}
-
-impl Intersection for TriangleGeometry {
-    fn intersection(&self, ray: &Ray) -> Option<f32> {
-        Matrix3::from_columns(&[self.b - self.a, self.c - self.a, -ray.direction()])
-            .lu()
-            .solve(&(ray.origin - self.a))
-            .map(|uvt| [uvt[0], uvt[1], uvt[2]])
-            .filter(|[u, v, ..]| {
-                let w: f32 = 1.0 - u - v;
-
-                u >= &0.0 && u <= &1.0 && v >= &0.0 && v <= &1.0 && w >= 0.0 && w <= 1.0
-            })
-            .map(|[.., t]| t)
     }
 }
 
