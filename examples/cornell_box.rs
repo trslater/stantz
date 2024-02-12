@@ -6,7 +6,7 @@ use na::Vector3;
 
 use stantz::{
     cameras::Camera,
-    geometry::{Geometry, SphereGeometry, TriangleGeometry},
+    geometry::{sphere::SphereGeometry, triangle::TriangleGeometry, Geometry},
     lighting::{Color, Light},
     materials::Material,
     objects::Object,

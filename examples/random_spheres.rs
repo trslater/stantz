@@ -9,7 +9,7 @@ use rand_pcg::Pcg32;
 
 use stantz::{
     cameras::Camera,
-    geometry::{Geometry, SphereGeometry},
+    geometry::{sphere::SphereGeometry, Geometry},
     lighting::{Color, Light},
     materials::Material,
     objects::Object,
