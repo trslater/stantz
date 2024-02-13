@@ -1,6 +1,8 @@
 use na::Vector3;
 
-use crate::geometry::{Center, NormalAt, AABB};
+use crate::rendering::ray::Ray;
+
+use super::{Center, Intersection, NormalAt, AABB};
 
 #[derive(Debug, Clone)]
 pub struct AABoxGeometry {
@@ -61,6 +63,40 @@ impl NormalAt for AABoxGeometry {
         }
 
         Vector3::new(0.0, 0.0, 0.0)
+    }
+}
+
+impl Intersection<Ray, f32> for AABoxGeometry {
+    type Argument = Ray;
+    type Output = f32;
+
+    fn intersection(&self, other: &Self::Argument) -> Option<Self::Output> {
+        let left_t = (self.min.x - other.origin.x) / other.direction().x;
+        let right_t = (self.max.x - other.origin.x) / other.direction().x;
+        let bottom_t = (self.min.y - other.origin.y) / other.direction().y;
+        let top_t = (self.max.y - other.origin.y) / other.direction().y;
+        let back_t = (self.min.z - other.origin.z) / other.direction().z;
+        let front_t = (self.max.z - other.origin.z) / other.direction().z;
+
+        let t_min = left_t
+            .min(right_t)
+            .max(bottom_t.min(top_t))
+            .max(back_t.min(front_t));
+
+        let t_max = left_t
+            .max(right_t)
+            .min(bottom_t.max(top_t))
+            .min(back_t.max(front_t));
+
+        if t_max < 0.0 || t_min > t_max {
+            return None;
+        }
+
+        if t_min < 0.0 {
+            return Some(t_max);
+        }
+
+        Some(t_min)
     }
 }
 

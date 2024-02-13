@@ -1,13 +1,17 @@
+pub mod ray;
+
 use image::RgbImage;
 use na::Vector3;
 
 use crate::{
     cameras::Camera,
-    geometry::{ray::Ray, Geometry, NormalAt},
+    geometry::Geometry,
     lighting::{Color, Light},
     materials::Material,
     objects::Object,
 };
+
+use ray::Ray;
 
 pub fn render(
     objects: &Vec<Object>,
@@ -35,54 +39,14 @@ pub fn render(
             let pixel_y = -(i as f32 - (image_height as f32 - 1.0) / 2.0) * pixel_size;
 
             let pixel_center = Vector3::new(pixel_x, pixel_y, pixel_z);
-            let pixel_color = cast_ray(&entries, lights, origin, pixel_center);
 
-            pixel_color
+            let ray = Ray::new(origin, pixel_center);
+
+            ray.color(&entries, lights)
         })
         .collect();
 
     write_image(&pixels, image_width, image_height, filename);
-}
-
-fn cast_ray(
-    entries: &Vec<(&Geometry, &Material)>,
-    lights: &Vec<Light>,
-    origin: Vector3<f32>,
-    direction: Vector3<f32>,
-) -> Color {
-    let ray = Ray::new(origin, direction);
-
-    entries
-        .iter()
-        .filter_map(|(geometry, material)| {
-            ray.hits_at(geometry)
-                .and_then(|t| Some((t, (geometry, material))))
-        })
-        // TODO: Does defaulting to less make sense?
-        .min_by(|(ta, _), (tb, _)| ta.total_cmp(tb))
-        .map(|(t, (geometry, material))| {
-            let hit_point = ray.point_at(t);
-            let hit_normal = geometry.normal_at(&hit_point);
-
-            lights
-                .iter()
-                .map(|light| {
-                    let light_direction = light.direction_from(&hit_point);
-
-                    // TODO: hit_point used twice. Can we optimize?
-                    let surface_diffusion = light_direction.dot(&hit_normal);
-                    let surface_specularity = (light_direction - ray.direction())
-                        .normalize()
-                        .dot(&hit_normal);
-
-                    light.color
-                        * material.color
-                        * (surface_diffusion * material.diffusion
-                            + surface_specularity.powi(material.shininess) * material.specularity)
-                })
-                .sum()
-        })
-        .unwrap_or(Color::new_black())
 }
 
 fn write_image(pixels: &Vec<Color>, image_width: u32, image_height: u32, filename: &String) {

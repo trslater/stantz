@@ -1,9 +1,12 @@
 pub mod aa_box;
-pub mod ray;
 pub mod sphere;
 pub mod triangle;
 
+use std::process::Output;
+
 use na::Vector3;
+
+use crate::rendering::ray::Ray;
 
 use aa_box::AABoxGeometry;
 use sphere::SphereGeometry;
@@ -24,6 +27,13 @@ pub trait NormalAt {
     fn normal_at(&self, point: &Vector3<f32>) -> Vector3<f32>;
 }
 
+pub trait Intersection<T, U> {
+    type Argument;
+    type Output;
+
+    fn intersection(&self, other: &Self::Argument) -> Option<Self::Output>;
+}
+
 pub trait AABB {
     fn aabb(&self) -> AABoxGeometry;
 }
@@ -34,6 +44,19 @@ impl Center for Geometry {
             Geometry::AABox(aa_box) => aa_box.center(),
             Geometry::Sphere(sphere) => sphere.center(),
             Geometry::Triangle(triangle) => triangle.center(),
+        }
+    }
+}
+
+impl Intersection<Ray, f32> for Geometry {
+    type Argument = Ray;
+    type Output = f32;
+
+    fn intersection(&self, other: &Self::Argument) -> Option<Self::Output> {
+        match self {
+            Geometry::AABox(aa_box) => aa_box.intersection(other),
+            Geometry::Sphere(sphere) => sphere.intersection(other),
+            Geometry::Triangle(triangle) => triangle.intersection(other),
         }
     }
 }
