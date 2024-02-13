@@ -13,9 +13,9 @@ pub struct AABoxGeometry {
 impl Center for AABoxGeometry {
     fn center(&self) -> Vector3<f32> {
         Vector3::new(
-            self.max.x - self.min.x,
-            self.max.y - self.min.y,
-            self.max.z - self.min.z,
+            (self.max.x + self.min.x) / 2.0,
+            (self.max.y + self.min.y) / 2.0,
+            (self.max.z + self.min.z) / 2.0,
         )
     }
 }
