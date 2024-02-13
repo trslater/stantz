@@ -2,8 +2,6 @@ pub mod aa_box;
 pub mod sphere;
 pub mod triangle;
 
-use std::process::Output;
-
 use na::Vector3;
 
 use crate::rendering::ray::Ray;
