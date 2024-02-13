@@ -25,7 +25,10 @@ cargo run --example random_spheres NUM_SPHERES NUM_LIGHTS SEED WIDTH HEIGHT FILE
 ## Roadmap
 
 - [x] Finalize object/material coupling
+- [ ] Read obj files
 - [ ] Implement BVH
+- [ ] Implement smooth normals
+- [ ] Implement shadows
 - [ ] Implement reflections
 - [ ] Transition to path tracing
 
