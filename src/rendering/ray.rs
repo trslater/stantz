@@ -63,9 +63,9 @@ impl Ray {
                     .dot(&hit_normal);
 
                 light.color
-                    * material.color
-                    * (material.diffused * diffusion
-                        + material.specular * specularity.powi(material.shininess))
+                    * (material.ambient_color
+                        + material.diffuse_color * diffusion
+                        + material.specular_color * specularity.powi(material.shininess))
             })
             .sum()
     }

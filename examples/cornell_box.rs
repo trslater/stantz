@@ -47,11 +47,11 @@ fn main() {
         radius: 0.5,
     })];
     let sphere_1_material = Material {
-        diffused: 0.3,
-        specular: 1.0,
+        ambient_color: Color::new(0.0, 0.0, 0.0),
+        diffuse_color: Color::new(0.3, 0.3, 0.3),
+        specular_color: Color::new(1.0, 1.0, 1.0),
         shininess: 50,
         reflectance: 0.75,
-        color: Color::new(1.0, 1.0, 1.0),
     };
 
     let sphere_2_mesh = vec![Geometry::Sphere(SphereGeometry {
@@ -59,11 +59,11 @@ fn main() {
         radius: 0.25,
     })];
     let sphere_2_material = Material {
-        diffused: 0.75,
-        specular: 0.25,
+        ambient_color: Color::new(0.0, 0.0, 0.0),
+        diffuse_color: Color::new(0.75, 0.0, 0.0),
+        specular_color: Color::new(0.25, 0.0, 0.0),
         shininess: 10,
         reflectance: 0.2,
-        color: Color::new(1.0, 0.0, 0.0),
     };
 
     let floor_mesh = vec![
@@ -79,11 +79,11 @@ fn main() {
         }),
     ];
     let floor_material = Material {
-        diffused: 1.0,
-        specular: 0.0,
+        ambient_color: Color::new(0.0, 0.0, 0.0),
+        diffuse_color: Color::new(0.9, 0.8, 0.7),
+        specular_color: Color::new(0.0, 0.0, 0.0),
         shininess: 0,
         reflectance: 0.25,
-        color: Color::new(0.9, 0.8, 0.7),
     };
 
     let red_wall_mesh = vec![
@@ -99,11 +99,11 @@ fn main() {
         }),
     ];
     let red_wall_material = Material {
-        diffused: 1.0,
-        specular: 0.0,
+        ambient_color: Color::new(0.0, 0.0, 0.0),
+        diffuse_color: Color::new(1.0, 0.0, 0.0),
+        specular_color: Color::new(0.0, 0.0, 0.0),
         shininess: 0,
         reflectance: 0.5,
-        color: Color::new(1.0, 0.0, 0.0),
     };
 
     let green_wall_mesh = vec![
@@ -119,11 +119,11 @@ fn main() {
         }),
     ];
     let green_wall_material = Material {
-        diffused: 1.0,
-        specular: 0.0,
+        ambient_color: Color::new(0.0, 0.0, 0.0),
+        diffuse_color: Color::new(0.0, 1.0, 0.0),
+        specular_color: Color::new(0.0, 0.0, 0.0),
         shininess: 0,
         reflectance: 0.5,
-        color: Color::new(0.0, 1.0, 0.0),
     };
 
     let back_wall_mesh = vec![
@@ -165,11 +165,11 @@ fn main() {
         }),
     ];
     let light_fixture_material = Material {
-        diffused: 0.0,
-        specular: 1.0,
+        ambient_color: Color::new(0.0, 0.0, 0.0),
+        diffuse_color: Color::new(0.0, 0.0, 0.0),
+        specular_color: Color::new(1.0, 1.0, 1.0),
         shininess: 0,
         reflectance: 0.0,
-        color: Color::new(1.0, 1.0, 1.0),
     };
 
     let objects: Vec<Object> = vec![
