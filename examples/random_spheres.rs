@@ -55,8 +55,8 @@ fn main() {
 
     let materials: Vec<Material> = (0..num_spheres)
         .map(|_| Material {
-            diffusion: lerp(0.0, 1.0, rng.gen::<f32>()),
-            specularity: lerp(0.0, 1.0, rng.gen::<f32>()),
+            diffused: lerp(0.0, 1.0, rng.gen::<f32>()),
+            specular: lerp(0.0, 1.0, rng.gen::<f32>()),
             shininess: lerp(0.0, 100.0, rng.gen::<f32>()) as i32,
             reflectance: lerp(0.0, 1.0, rng.gen::<f32>()),
             color: Color::new(

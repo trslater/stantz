@@ -47,8 +47,8 @@ fn main() {
         radius: 0.5,
     })];
     let sphere_1_material = Material {
-        diffusion: 0.3,
-        specularity: 1.0,
+        diffused: 0.3,
+        specular: 1.0,
         shininess: 50,
         reflectance: 0.75,
         color: Color::new(1.0, 1.0, 1.0),
@@ -59,8 +59,8 @@ fn main() {
         radius: 0.25,
     })];
     let sphere_2_material = Material {
-        diffusion: 0.75,
-        specularity: 0.25,
+        diffused: 0.75,
+        specular: 0.25,
         shininess: 10,
         reflectance: 0.2,
         color: Color::new(1.0, 0.0, 0.0),
@@ -79,8 +79,8 @@ fn main() {
         }),
     ];
     let floor_material = Material {
-        diffusion: 1.0,
-        specularity: 0.0,
+        diffused: 1.0,
+        specular: 0.0,
         shininess: 0,
         reflectance: 0.25,
         color: Color::new(0.9, 0.8, 0.7),
@@ -99,8 +99,8 @@ fn main() {
         }),
     ];
     let red_wall_material = Material {
-        diffusion: 1.0,
-        specularity: 0.0,
+        diffused: 1.0,
+        specular: 0.0,
         shininess: 0,
         reflectance: 0.5,
         color: Color::new(1.0, 0.0, 0.0),
@@ -119,8 +119,8 @@ fn main() {
         }),
     ];
     let green_wall_material = Material {
-        diffusion: 1.0,
-        specularity: 0.0,
+        diffused: 1.0,
+        specular: 0.0,
         shininess: 0,
         reflectance: 0.5,
         color: Color::new(0.0, 1.0, 0.0),
@@ -165,8 +165,8 @@ fn main() {
         }),
     ];
     let light_fixture_material = Material {
-        diffusion: 0.0,
-        specularity: 1.0,
+        diffused: 0.0,
+        specular: 1.0,
         shininess: 0,
         reflectance: 0.0,
         color: Color::new(1.0, 1.0, 1.0),

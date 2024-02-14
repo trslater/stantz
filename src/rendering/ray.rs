@@ -57,15 +57,15 @@ impl Ray {
                 let light_direction = light.direction_from(&hit_point);
 
                 // TODO: hit_point used twice. Can we optimize?
-                let surface_diffusion = light_direction.dot(&hit_normal);
-                let surface_specularity = (light_direction - self.direction())
+                let diffusion = light_direction.dot(&hit_normal);
+                let specularity = (light_direction - self.direction())
                     .normalize()
                     .dot(&hit_normal);
 
                 light.color
                     * material.color
-                    * (surface_diffusion * material.diffusion
-                        + surface_specularity.powi(material.shininess) * material.specularity)
+                    * (material.diffused * diffusion
+                        + material.specular * specularity.powi(material.shininess))
             })
             .sum()
     }
