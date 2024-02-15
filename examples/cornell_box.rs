@@ -13,29 +13,21 @@ use stantz::{
     rendering::render,
 };
 
+const USAGE: &str = "cargo run --example cornell_box WIDTH HEIGHT ANTI_ALIASING FILENAME";
+
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    if args.len() == 1 {
-        println!("Must provide image width, height, and filename.");
-        process::exit(1);
-    } else if args.len() == 2 {
-        println!("Must provide image height and filename.");
-        process::exit(1);
-    } else if args.len() == 3 {
-        println!("Must provide filename.");
+    if args.len() < 4 {
+        println!("{}", USAGE);
         process::exit(1);
     }
 
-    let width = args[1]
-        .parse::<u32>()
-        .expect("Image width must be an integer");
-    let height = args[2]
-        .parse::<u32>()
-        .expect("Image height must be an integer");
+    let width = args[1].parse::<u32>().expect("WIDTH must be an integer");
+    let height = args[2].parse::<u32>().expect("HEIGHT must be an integer");
     let anti_aliasing = args[3]
         .parse::<u32>()
-        .expect("Anti-aliasing must be an integer");
+        .expect("ANTI_ALIASING must be an integer");
     let filename = &args[4];
 
     let green_wall_x: f32 = 1.5;
