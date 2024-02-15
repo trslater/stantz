@@ -29,13 +29,19 @@ fn main() {
 
     let num_spheres = args[1]
         .parse::<u32>()
-        .expect("NUM_SPHERES must be an integer");
+        .expect("NUM_SPHERES must be an unsigned integer");
     let num_lights = args[2]
         .parse::<u32>()
-        .expect("NUM_LIGHTS must be an integer");
-    let seed = args[3].parse::<u64>().expect("SEED must be an integer");
-    let image_width = args[4].parse::<u32>().expect("WIDTH must be an integer");
-    let image_height = args[5].parse::<u32>().expect("HEIGHT must be an integer");
+        .expect("NUM_LIGHTS must be an unsigned integer");
+    let seed = args[3]
+        .parse::<u64>()
+        .expect("SEED must be an unsigned integer");
+    let image_width = args[4]
+        .parse::<u32>()
+        .expect("WIDTH must be an unsigned integer");
+    let image_height = args[5]
+        .parse::<u32>()
+        .expect("HEIGHT must be an unsigned integer");
     let anti_aliasing = args[6]
         .parse::<u32>()
         .expect("ANTI_ALIASING must be an integer");

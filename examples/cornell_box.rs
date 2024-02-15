@@ -23,11 +23,15 @@ fn main() {
         process::exit(1);
     }
 
-    let image_width = args[1].parse::<u32>().expect("WIDTH must be an integer");
-    let image_height = args[2].parse::<u32>().expect("HEIGHT must be an integer");
+    let image_width = args[1]
+        .parse::<u32>()
+        .expect("WIDTH must be an unsigned integer");
+    let image_height = args[2]
+        .parse::<u32>()
+        .expect("HEIGHT must be an unsigned integer");
     let anti_aliasing = args[3]
         .parse::<u32>()
-        .expect("ANTI_ALIASING must be an integer");
+        .expect("ANTI_ALIASING must be an unsigned integer");
     let filename = &args[4];
 
     let green_wall_x: f32 = 1.5;
