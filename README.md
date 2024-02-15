@@ -9,7 +9,7 @@ My take on the famous rendering demo scene.
 Usage:
 
 ```
-cargo run --example cornell_box WIDTH HEIGHT FILE
+cargo run --example cornell_box WIDTH HEIGHT ANTI_ALIASING FILE
 ```
 
 ### Random Spheres
@@ -19,7 +19,7 @@ Generates `NUM_SPHERES` spheres with random sizes, positions, colours, and mater
 Usage:
 
 ```
-cargo run --example random_spheres NUM_SPHERES NUM_LIGHTS SEED WIDTH HEIGHT FILE
+cargo run --example random_spheres NUM_SPHERES NUM_LIGHTS SEED WIDTH HEIGHT ANTI_ALIASING FILE
 ```
 
 ## Roadmap
