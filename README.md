@@ -2,6 +2,8 @@
 
 ![](docs/assets/random_spheres.png)
 
+Stantz, named after Dr. Ray Stantz, "the heart of the Ghostbusters," is a ray tracer written in Rust. This is a hobby project for my own enjoyment.
+
 ## Examples
 
 ### Cornell Box
