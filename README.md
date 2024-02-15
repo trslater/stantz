@@ -1,5 +1,7 @@
 # Stantz
 
+![](docs/assets/random_spheres.png)
+
 ## Examples
 
 ### Cornell Box
