@@ -33,7 +33,10 @@ fn main() {
     let height = args[2]
         .parse::<u32>()
         .expect("Image height must be an integer");
-    let filename = &args[3];
+    let anti_aliasing = args[3]
+        .parse::<u32>()
+        .expect("Anti-aliasing must be an integer");
+    let filename = &args[4];
 
     let green_wall_x: f32 = 1.5;
     let red_wall_x: f32 = -1.5;
@@ -218,6 +221,14 @@ fn main() {
     };
 
     let now = Instant::now();
-    render(&objects, &lights, &camera, width, height, 2, filename);
+    render(
+        &objects,
+        &lights,
+        &camera,
+        width,
+        height,
+        anti_aliasing,
+        filename,
+    );
     println!("Cornell Box rendered in {:.2?}", now.elapsed());
 }

@@ -17,12 +17,12 @@ use stantz::{
 };
 
 const USAGE: &str =
-    "cargo run --example random_spheres NUM_SPHERES NUM_LIGHTS SEED WIDTH HEIGHT FILENAME";
+    "cargo run --example random_spheres NUM_SPHERES NUM_LIGHTS SEED WIDTH HEIGHT ANTI_ALIASING FILENAME";
 
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    if args.len() < 6 {
+    if args.len() < 7 {
         println!("{}", USAGE);
         process::exit(1);
     }
@@ -36,7 +36,10 @@ fn main() {
     let seed = args[3].parse::<u64>().expect("SEED must be an integer");
     let width = args[4].parse::<u32>().expect("WIDTH must be an integer");
     let height = args[5].parse::<u32>().expect("HEIGHT must be an integer");
-    let filename = &args[6];
+    let anti_aliasing = args[6]
+        .parse::<u32>()
+        .expect("ANTI_ALIASING must be an integer");
+    let filename = &args[7];
 
     let mut rng = Pcg32::new(seed, 0);
 
@@ -105,7 +108,15 @@ fn main() {
     };
 
     let now = Instant::now();
-    render(&objects, &lights, &camera, width, height, 2, filename);
+    render(
+        &objects,
+        &lights,
+        &camera,
+        width,
+        height,
+        anti_aliasing,
+        filename,
+    );
     println!("Random spheres rendered in {:.2?}", now.elapsed());
 }
 
