@@ -34,8 +34,8 @@ fn main() {
         .parse::<u32>()
         .expect("NUM_LIGHTS must be an integer");
     let seed = args[3].parse::<u64>().expect("SEED must be an integer");
-    let width = args[4].parse::<u32>().expect("WIDTH must be an integer");
-    let height = args[5].parse::<u32>().expect("HEIGHT must be an integer");
+    let image_width = args[4].parse::<u32>().expect("WIDTH must be an integer");
+    let image_height = args[5].parse::<u32>().expect("HEIGHT must be an integer");
     let anti_aliasing = args[6]
         .parse::<u32>()
         .expect("ANTI_ALIASING must be an integer");
@@ -112,8 +112,8 @@ fn main() {
         &objects,
         &lights,
         &camera,
-        width,
-        height,
+        image_width,
+        image_height,
         anti_aliasing,
         filename,
     );

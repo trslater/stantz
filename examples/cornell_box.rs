@@ -23,8 +23,8 @@ fn main() {
         process::exit(1);
     }
 
-    let width = args[1].parse::<u32>().expect("WIDTH must be an integer");
-    let height = args[2].parse::<u32>().expect("HEIGHT must be an integer");
+    let image_width = args[1].parse::<u32>().expect("WIDTH must be an integer");
+    let image_height = args[2].parse::<u32>().expect("HEIGHT must be an integer");
     let anti_aliasing = args[3]
         .parse::<u32>()
         .expect("ANTI_ALIASING must be an integer");
@@ -217,8 +217,8 @@ fn main() {
         &objects,
         &lights,
         &camera,
-        width,
-        height,
+        image_width,
+        image_height,
         anti_aliasing,
         filename,
     );
