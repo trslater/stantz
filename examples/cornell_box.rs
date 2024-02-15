@@ -218,6 +218,6 @@ fn main() {
     };
 
     let now = Instant::now();
-    render(&objects, &lights, &camera, width, height, filename);
+    render(&objects, &lights, &camera, width, height, 2, filename);
     println!("Cornell Box rendered in {:.2?}", now.elapsed());
 }

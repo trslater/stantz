@@ -25,7 +25,7 @@ cargo run --example random_spheres NUM_SPHERES NUM_LIGHTS SEED WIDTH HEIGHT FILE
 ## Roadmap
 
 - [x] Finalize object/material coupling
-- [ ] Anti-aliasing
+- [x] Anti-aliasing
 - [ ] Pre-calculated normals
 - [ ] Read obj files
 - [ ] BVH

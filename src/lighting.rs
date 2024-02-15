@@ -22,6 +22,18 @@ impl Color {
         Self::new(0.0, 0.0, 0.0)
     }
 
+    pub fn red(&self) -> f32 {
+        return self.red;
+    }
+
+    pub fn green(&self) -> f32 {
+        return self.green;
+    }
+
+    pub fn blue(&self) -> f32 {
+        return self.blue;
+    }
+
     pub fn as_8_bit_array(&self) -> [u8; 3] {
         [
             (self.red * 255.0) as u8,
@@ -66,6 +78,14 @@ impl ops::Mul<f32> for Color {
 
     fn mul(self, rhs: f32) -> Self::Output {
         Color::new(self.red * rhs, self.green * rhs, self.blue * rhs)
+    }
+}
+
+impl ops::Div<f32> for Color {
+    type Output = Self;
+
+    fn div(self, rhs: f32) -> Self::Output {
+        self * (1.0 / rhs)
     }
 }
 
