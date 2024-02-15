@@ -65,9 +65,9 @@ fn main() {
     let materials: Vec<Material> = (0..num_spheres)
         .map(|_| Material {
             ambient_color: Color::new(
-                lerp(0.0, 0.2, rng.gen::<f32>()),
-                lerp(0.0, 0.2, rng.gen::<f32>()),
-                lerp(0.0, 0.2, rng.gen::<f32>()),
+                lerp(0.0, 0.1, rng.gen::<f32>()),
+                lerp(0.0, 0.1, rng.gen::<f32>()),
+                lerp(0.0, 0.1, rng.gen::<f32>()),
             ),
             diffuse_color: Color::new(
                 lerp(0.0, 1.0, rng.gen::<f32>()),
